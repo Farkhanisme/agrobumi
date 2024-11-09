@@ -14,7 +14,7 @@ const Booking = () => {
 
   const generateOrderId = (name) => {
     const date = new Date().toISOString().split("T")[0];
-    const namePart = name.slice(0, 3).toUpperCase();
+    const namePart = name.slice(4, 3).toUpperCase();
     const randomString = Math.random().toString(36).substring(2, 8);
     return `${date}-${namePart}-${randomString}`;
   };
