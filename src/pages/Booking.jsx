@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -111,101 +112,103 @@ const Booking = () => {
   }, []);
 
   return (
-    <div id="form" className="flex p-5">
-      <div
-        id="form-pesan"
-        className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
-      >
-        <span className="text-green-600">
-          <h1>BOOKING NOW</h1>
-          <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
-        </span>
-        <form className="space-y-5" onSubmit={handleSubmit}>
+    <>
+      <div id="form" className="flex p-5">
+        <div
+          id="form-pesan"
+          className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
+        >
+          <span className="text-green-600">
+            <h1>BOOKING NOW</h1>
+            <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
+          </span>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+              placeholder="Nama Pemesan"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="email"
+              className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+              placeholder="Masukkan email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="date"
+              className="w-full border border-black rounded-md p-1 text-sm text-gray-500"
+              placeholder="Tanggal Kunjungan"
+              value={tanggal}
+              onChange={(e) => setTanggal(e.target.value)}
+            />
+            <input
+              type="number"
+              className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+              placeholder="Jumlah Anggota"
+              value={jumlah}
+              onChange={handleJumlahChange}
+            />
+            <select
+              name="tiket"
+              id="tiket"
+              className="w-full border border-black rounded-md p-1 text-gray-500 text-sm focus:block"
+              value={tiket}
+              onChange={handleTiketChange}
+            >
+              <option value="pilih tiket">Pilih Tiket</option>
+              <option value="10000">Wisata</option>
+            </select>
+            <button
+              className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
+              type="submit"
+            >
+              Pesan
+            </button>
+          </form>
+        </div>
+        <div id="detail" className="p-14 text-center w-1/2 space-y-7">
+          <h1 className="text-green-600 mb-3">Detail Pemesanan</h1>
           <input
             type="text"
-            className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
             placeholder="Nama Pemesan"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            readOnly
           />
           <input
             type="email"
-            className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
-            placeholder="Masukkan email"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
+            placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly
           />
           <input
-            type="date"
-            className="w-full border border-black rounded-md p-1 text-sm text-gray-500"
+            type="text"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
             placeholder="Tanggal Kunjungan"
             value={tanggal}
-            onChange={(e) => setTanggal(e.target.value)}
+            readOnly
           />
           <input
             type="number"
-            className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
             placeholder="Jumlah Anggota"
             value={jumlah}
-            onChange={handleJumlahChange}
+            readOnly
           />
-          <select
-            name="tiket"
-            id="tiket"
-            className="w-full border border-black rounded-md p-1 text-gray-500 text-sm focus:block"
-            value={tiket}
-            onChange={handleTiketChange}
-          >
-            <option value="pilih tiket">Pilih Tiket</option>
-            <option value="10000">Wisata</option>
-          </select>
-          <button
-            className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
-            type="submit"
-          >
-            Pesan
-          </button>
-        </form>
+          <input
+            type="number"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
+            placeholder="Total Harga"
+            value={totalHarga}
+            readOnly
+          />
+        </div>
       </div>
-      <div id="detail" className="p-14 text-center w-1/2 space-y-7">
-        <h1 className="text-green-600 mb-11">Detail Pemesanan</h1>
-        <input
-          type="text"
-          className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
-          placeholder="Nama Pemesan"
-          value={name}
-          readOnly
-        />
-        <input
-          type="email"
-          className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
-          placeholder="Email"
-          value={email}
-          readOnly
-        />
-        <input
-          type="text"
-          className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
-          placeholder="Tanggal Kunjungan"
-          value={tanggal}
-          readOnly
-        />
-        <input
-          type="number"
-          className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
-          placeholder="Jumlah Anggota"
-          value={jumlah}
-          readOnly
-        />
-        <input
-          type="number"
-          className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
-          placeholder="Total Harga"
-          value={totalHarga}
-          readOnly
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
