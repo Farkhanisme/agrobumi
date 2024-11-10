@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Booking from "../pages/Booking";
 import "./Navbar.css";
+import Beranda from "./Beranda";
+import Event from "./Event";
 
 const Navbar = () => {
   const location = useLocation();
@@ -28,6 +30,11 @@ const Navbar = () => {
         <li>
           <Link to="/destinasi" className={getLinkClass("/destinasi")}>
             Destinations
+          </Link>
+        </li>
+        <li>
+          <Link to="/event" className={getLinkClass("/event")}>
+            Events
           </Link>
         </li>
         <li>
@@ -54,8 +61,9 @@ const Nav = () => {
       <Navbar />
       <Routes>
         {/* Define routes */}
-        {/* <Route path="/" element={<Home />} />
-        <Route path="/destinasi" element={<Destination />} />
+        <Route path="/" element={<Beranda />} />
+        <Route path="/event" element={<Event />} />
+        {/* <Route path="/destinasi" element={<Destination />} />
         <Route path="/about" element={<About />} /> */}
         <Route path="/booking" element={<Booking />} />
         {/* <Route path="/login" element={<Login />} /> */}
