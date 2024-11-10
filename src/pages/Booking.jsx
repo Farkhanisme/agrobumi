@@ -160,7 +160,7 @@ const Booking = () => {
             <option value="10000">Wisata</option>
           </select>
           <button
-            className="bg-green-600 rounded-md p-1 w-24 text-white"
+            className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
             type="submit"
           >
             Pesan
