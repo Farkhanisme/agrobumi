@@ -14,7 +14,7 @@ const Booking = () => {
 
   const generateOrderId = (name) => {
     const date = new Date().toISOString().split("T")[0];
-    const namePart = name.slice(4, 3).toUpperCase();
+    const namePart = name.slice(0, 3).toUpperCase();
     const randomString = Math.random().toString(36).substring(2, 8);
     return `${date}-${namePart}-${randomString}`;
   };
@@ -23,22 +23,18 @@ const Booking = () => {
     const selectedTiket = e.target.value;
     setTiket(selectedTiket);
 
-    let price = 0;
-    if (selectedTiket === "wisata") {
-      price = 10000;
-    }
-    setTotalHarga(price * jumlah);
+    setTotalHarga(selectedTiket * jumlah);
   };
 
   const handleJumlahChange = (e) => {
     const newJumlah = parseInt(e.target.value);
     setJumlah(newJumlah);
 
-    let price = 0;
-    if (tiket === "wisata") {
-      price = 10000;
-    }
-    setTotalHarga(price * newJumlah);
+    // let price = 0;
+    // if (tiket === "wisata") {
+    //   price = 10000;
+    // }
+    setTotalHarga(tiket * newJumlah);
   };
 
   const handleSubmit = async (e) => {
@@ -161,7 +157,7 @@ const Booking = () => {
             onChange={handleTiketChange}
           >
             <option value="pilih tiket">Pilih Tiket</option>
-            <option value="wisata">Wisata</option>
+            <option value="10000">Wisata</option>
           </select>
           <button
             className="bg-green-600 rounded-md p-1 w-24 text-white"
