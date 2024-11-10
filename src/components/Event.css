@@ -205,19 +205,20 @@ body {
     margin-bottom: 10px;
 }
 
-.card-content .details {
+.details {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 10px;
 }
 
-.card-content .details button {
+.details button {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    margin: 0 5px;
 }
 
 .more-link {
