@@ -1,4 +1,5 @@
 import React from "react";
+import "./Us.css";
 
 function TeamAgrobumi() {
   return (

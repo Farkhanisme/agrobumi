@@ -1,8 +1,8 @@
 import React from "react";
-import Us from "./Us"
+import "./About.css";
 
 function AboutUs() {
-return (
+  return (
     <div className="container">
       <header>
         <h2>Narmada Botanic Garden</h2>
@@ -32,14 +32,7 @@ return (
             aliquip ex ea commodo consequat.
           </p>
         </section>
-
-        
       </main>
-
-      <footer>
-        <p>&copy; 2023 Narmada Botanic Garden</p>
-      </footer>
-      <Us />
     </div>
   );
 }

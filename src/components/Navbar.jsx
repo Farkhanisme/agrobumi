@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  useLocation,
-} from "react-router-dom";
-import Booking from "../pages/Booking";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
-import Beranda from "../pages/Beranda";
-import Event from "../pages/Event";
-import About from "../pages/About"
 
 const Navbar = () => {
   const location = useLocation();
@@ -56,20 +46,4 @@ const Navbar = () => {
   );
 };
 
-const Nav = () => {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Beranda />} />
-        <Route path="/event" element={<Event />} />
-        {/* <Route path="/destinasi" element={<Destination />} /> */}
-        <Route path="/about" element={<About />} />
-        <Route path="/booking" element={<Booking />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-      </Routes>
-    </Router>
-  );
-};
-
-export default Nav;
+export default Navbar;
