@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import Booking from "./pages/Booking"
+import Navbar from './components/Navbar'
 
 function App() {
   
   return (
-    <Booking />
+    <Navbar />
   )
 }
 
