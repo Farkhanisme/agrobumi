@@ -1,0 +1,33 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 50px;
+}
+
+header {
+    text-align: center;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin: 10px;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+p {
+    text-align: justify; /* Menyejajarkan teks ke kiri dan kanan */
+    margin-bottom: 10px; /* Memberi jarak antar paragraf */
+}
