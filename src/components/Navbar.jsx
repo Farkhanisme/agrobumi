@@ -10,7 +10,7 @@ import Booking from "../pages/Booking";
 import "./Navbar.css";
 import Beranda from "../pages/Beranda";
 import Event from "../pages/Event";
-import About from "../pages/Us"
+import About from "../pages/About"
 
 const Navbar = () => {
   const location = useLocation();
