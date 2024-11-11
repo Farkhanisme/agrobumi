@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -119,7 +118,7 @@ const Booking = () => {
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
         >
           <span className="text-green-600">
-            <h1>BOOKING NOW</h1>
+            <h1 className="text-2xl">BOOKING NOW</h1>
             <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
           </span>
           <form className="space-y-5" onSubmit={handleSubmit}>
@@ -170,7 +169,7 @@ const Booking = () => {
           </form>
         </div>
         <div id="detail" className="p-14 text-center w-1/2 space-y-7">
-          <h1 className="text-green-600 mb-3">Detail Pemesanan</h1>
+          <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
             className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
