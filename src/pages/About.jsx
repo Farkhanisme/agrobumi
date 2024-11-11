@@ -1,4 +1,5 @@
 import React from "react";
+import Us from "./Us"
 
 function AboutUs() {
 return (
@@ -38,6 +39,7 @@ return (
       <footer>
         <p>&copy; 2023 Narmada Botanic Garden</p>
       </footer>
+      <Us />
     </div>
   );
 }

@@ -8,8 +8,9 @@ import {
 } from "react-router-dom";
 import Booking from "../pages/Booking";
 import "./Navbar.css";
-import Beranda from "./Beranda";
-import Event from "./Event";
+import Beranda from "../pages/Beranda";
+import Event from "../pages/Event";
+import About from "../pages/About"
 
 const Navbar = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <img alt="Narmada Botanic Garden Logo" src="logo.png" />
+      <img alt="Narmada Botanic Garden Logo" src="../brand.png" />
       <ul>
         <li>
           <Link to="/" className={getLinkClass("/")}>
@@ -60,11 +61,10 @@ const Nav = () => {
     <Router>
       <Navbar />
       <Routes>
-        {/* Define routes */}
         <Route path="/" element={<Beranda />} />
         <Route path="/event" element={<Event />} />
-        {/* <Route path="/destinasi" element={<Destination />} />
-        <Route path="/about" element={<About />} /> */}
+        {/* <Route path="/destinasi" element={<Destination />} /> */}
+        <Route path="/about" element={<About />} />
         <Route path="/booking" element={<Booking />} />
         {/* <Route path="/login" element={<Login />} /> */}
       </Routes>

@@ -3,41 +3,45 @@ import "./Beranda.css";
 
 const App = () => {
   return (
-    <div>
-      <div className="isi">
-        <div className="content">
-          <p>Mari Temukan Keajaiban Agrowisata Lombok</p>
-          <h1>Mari Jelajahi Sekarang</h1>
-          <h1>
-            Dan <span>Temukan Alam</span>,
-          </h1>
-          <h1>Keindahan di Lombok.</h1>
-          <p>Jangan Tunggu, Sekarang Waktunya Menjelajahi Lombok</p>
-          <p>Dan Temukan Keunikan Agrowisatanya.</p>
-          <div className="buttons">
-            <a className="explore" href="#">
-              Jelajahi Sekarang
-              <i className="fas fa-arrow-right"></i>
-            </a>
-            <a className="fitur" href="#">
-              Fitur Lain
-              <i className="fas fa-arrow-right"></i>
-            </a>
+    <div className="overflow-hidden">
+      <div className="flex my-14 w-screen justify-center items-center">
+        <div className="isi">
+          <div className="content">
+            <p>Mari Temukan Keajaiban Agrowisata Lombok</p>
+            <h1>Mari Jelajahi Sekarang</h1>
+            <h1>
+              Dan <span>Temukan Alam</span>,
+            </h1>
+            <h1>Keindahan di Lombok.</h1>
+            <p>Jangan Tunggu, Sekarang Waktunya Menjelajahi Lombok</p>
+            <p>Dan Temukan Keunikan Agrowisatanya.</p>
+            <div className="buttons">
+              <a className="explore" href="#">
+                Jelajahi Sekarang
+                <i className="fas fa-arrow-right"></i>
+              </a>
+              <a className="fitur" href="#">
+                Fitur Lain
+                <i className="fas fa-arrow-right"></i>
+              </a>
+            </div>
           </div>
+        </div>
+
+        <div className="img">
+          <img className="image image1" src="gambar1.jpg" alt="Image 1" />
+          <img className="image image2" src="gambar2.jpg" alt="Image 2" />
+          <img className="image image3" src="gambar3.jpg" alt="Image 3" />
         </div>
       </div>
 
-      <div className="img">
-        <img className="image image1" src="gambar1.jpg" alt="Image 1" />
-        <img className="image image2" src="gambar2.jpg" alt="Image 2" />
-        <img className="image image3" src="gambar3.jpg" alt="Image 3" />
-      </div>
-
       <div className="explore2">
-        <h5>Explore Popular Cities</h5>
-        <a className="subtitle">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit.
+        <h5 className="font-bold text-5xl my-10">
+          Explore Narmada Botanic Garden
+        </h5>
+        <a className="subtitle text-md">
+          Selamat di Narmada Botanic Garden, <br />
+          destinasi Agrowisata Lombok
         </a>
         <div className="main-image"></div>
         <div className="card-container">
@@ -70,9 +74,11 @@ const App = () => {
             <a className="price">Rp. 35,000</a>
           </div>
         </div>
+      </div>
 
+      <div className="w-screen flex flex-wrap justify-center items-center p-10">
         <h2 className="gallery-title">Narmada Botanic Garden gallery</h2>
-        <div className="gallery">
+        <div className="gallery ml-10 p-0">
           <img alt="Tampilan 1" height="150" src="#" width="300" />
           <img alt="Tampilan 2" height="150" src="#" width="300" />
           <img alt="Tampilan 3" height="150" src="#" width="300" />

@@ -4,12 +4,9 @@
     align-items: center;
     padding: 20px 50px;
     background-color: #fff;
-    width: 94%;
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+    width: 100%;
+    position: sticky;
+
 }
 
 .navbar img {
