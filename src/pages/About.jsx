@@ -1,8 +1,8 @@
 import React from "react";
-import Us from "./Us"
+import Us from "./Us";
 
 function AboutUs() {
-return (
+  return (
     <div className="container">
       <header>
         <h2>Narmada Botanic Garden</h2>
@@ -31,9 +31,8 @@ return (
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </p>
+          {/* Repeat similar sections for Visi and Misi */}
         </section>
-
-        
       </main>
 
       <footer>
