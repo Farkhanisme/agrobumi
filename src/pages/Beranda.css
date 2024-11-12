@@ -36,7 +36,6 @@
     border-radius: 5px;
     margin-right: 10px;
     font-size: 16px;
-    display: inline-block;
 }
 
 .buttons .explore {
@@ -99,14 +98,6 @@ h5 {
     color: #6c757d;
     margin-bottom: 30px;
     display: block;
-}
-
-.main-image {
-    border-radius: 10px;
-    width: 100%;
-    height: 300px;
-    background-color: #e9ecef;
-    margin-bottom: 30px;
 }
 
 .card-container {

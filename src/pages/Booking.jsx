@@ -79,7 +79,7 @@ const Booking = () => {
           setJumlah(0);
           setTiket("pilih tiket");
           setTotalHarga(0);
-          setOrder_id(0);
+          setOrder_id("");
         },
         onPending: (result) => {
           //   localStorage.setItem("Pembayaran", JSON.stringify(result));
@@ -112,7 +112,7 @@ const Booking = () => {
 
   return (
     <>
-      <div id="form" className="flex p-5">
+      <div id="form" className="flex p-5 my-14">
         <div
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"

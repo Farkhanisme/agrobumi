@@ -19,11 +19,6 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/destinasi" className={getLinkClass("/destinasi")}>
-            Destinations
-          </Link>
-        </li>
-        <li>
           <Link to="/event" className={getLinkClass("/event")}>
             Events
           </Link>

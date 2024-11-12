@@ -3,7 +3,7 @@ import "./About.css";
 
 function AboutUs() {
   return (
-    <div className="container">
+    <div className="container my-14">
       <header>
         <h2>Narmada Botanic Garden</h2>
       </header>

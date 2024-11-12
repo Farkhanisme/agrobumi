@@ -5,23 +5,24 @@ import Booking from "./pages/Booking";
 import Beranda from "./pages/Beranda";
 import Event from "./pages/Event";
 import About from "./pages/About";
-import Us from './pages/Us';
+import Us from "./pages/Us";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Beranda />} />
-        <Route path="/event" element={<Event />} />
-        {/* <Route path="/destinasi" element={<Destination />} /> */}
-        <Route path="/about" element={<About />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/us" element={<Us />} />
-        {/* <Route path="/login" element={<Login />} /> */}
-      </Routes>
-      <Footer />
-    </Router>
+    <div className="overflow-hidden">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Beranda />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/us" element={<Us />} />
+          {/* <Route path="/login" element={<Login />} /> */}
+        </Routes>
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
