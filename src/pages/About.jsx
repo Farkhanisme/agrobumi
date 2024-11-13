@@ -1,5 +1,7 @@
 import React from "react";
 import Us from "./Us";
+import "./About.css";
+ 
 
 function AboutUs() {
   return (
@@ -34,11 +36,6 @@ function AboutUs() {
           {/* Repeat similar sections for Visi and Misi */}
         </section>
       </main>
-
-      <footer>
-        <p>&copy; 2023 Narmada Botanic Garden</p>
-      </footer>
-      <Us />
     </div>
   );
 }
