@@ -6,18 +6,18 @@ const Booking = () => {
   const [email, setEmail] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [jumlah, setJumlah] = useState(1);
-  const [tiket, setTiket] = useState("pilih tiket");
+  const [tiket, setTiket] = useState("");
   const [totalHarga, setTotalHarga] = useState(0);
-  const [order_id, setOrder_id] = useState(0);
+  // const [order_id, setOrder_id] = useState(0);
 
   const [token, setToken] = useState("");
 
-  const generateOrderId = (name) => {
-    const date = new Date().toISOString().split("T")[0];
-    const namePart = name.slice(0, 3).toUpperCase();
-    const randomString = Math.random().toString(36).substring(2, 8);
-    return `${date}-${namePart}-${randomString}`;
-  };
+  // const generateOrderId = (name) => {
+  //   const date = new Date().toISOString().split("T")[0];
+  //   const namePart = name.slice(0, 3).toUpperCase();
+  //   const randomString = Math.random().toString(36).substring(2, 8);
+  //   return `${date}-${namePart}-${randomString}`;
+  // };
 
   const handleTiketChange = (e) => {
     const selectedTiket = e.target.value;
@@ -40,11 +40,10 @@ const Booking = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newOrderId = generateOrderId(name);
-    setOrder_id(newOrderId);
+    // const newOrderId = generateOrderId(name);
+    // setOrder_id(newOrderId);
 
     const data = {
-      order_id: order_id,
       name: name,
       email: email,
       tanggal: tanggal,
@@ -53,62 +52,70 @@ const Booking = () => {
       totalHarga: totalHarga,
     };
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     const response = await axios.post(
-      "http://localhost:1000/api/payment/process-transaction",
-      data,
-      config
+      "http://localhost:3000/api/snap-token",
+      data
     );
     setToken(response.data.token);
+
+    window.snap.pay(token, {
+      onSuccess: function (result) {
+        console.log("Payment Success:", result);
+      },
+      onPending: function (result) {
+        console.log("Payment Pending:", result);
+      },
+      onError: function (result) {
+        console.log("Payment Failed:", result);
+      },
+      onClose: function () {
+        console.log("Customer closed the popup without finishing the payment");
+      },
+    });
   };
 
-  useEffect(() => {
-    if (token) {
-      window.snap.pay(token, {
-        onSuccess: (result) => {
-          //   localStorage.setItem("Pembayaran", JSON.stringify(result));
-          setToken("");
-          setName("");
-          setEmail("");
-          setTanggal("");
-          setJumlah(0);
-          setTiket("pilih tiket");
-          setTotalHarga(0);
-          setOrder_id("");
-        },
-        onPending: (result) => {
-          //   localStorage.setItem("Pembayaran", JSON.stringify(result));
-          setToken("");
-        },
-        onError: (error) => {
-          console.log(error);
-          setToken("");
-        },
-        onClose: () => {
-          console.log("Pembayaran belum selesai");
-          setToken("");
-        },
-      });
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     window.snap.pay(token, {
+  //       onSuccess: (result) => {
+  //         //   localStorage.setItem("Pembayaran", JSON.stringify(result));
+  //         setToken("");
+  //         setName("");
+  //         setEmail("");
+  //         setTanggal("");
+  //         setJumlah(0);
+  //         setTiket("pilih tiket");
+  //         setTotalHarga(0);
+  //         setOrder_id("");
+  //       },
+  //       onPending: (result) => {
+  //         //   localStorage.setItem("Pembayaran", JSON.stringify(result));
+  //         setToken("");
+  //       },
+  //       onError: (error) => {
+  //         console.log(error);
+  //         setToken("");
+  //       },
+  //       onClose: () => {
+  //         console.log("Pembayaran belum selesai");
+  //         setToken("");
+  //       },
+  //     });
+  //   }
+  // }, [token]);
 
-  useEffect(() => {
-    const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-    let scriptTag = document.createElement("script");
-    scriptTag.src = midtransUrl;
+  // useEffect(() => {
+  //   const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+  //   let scriptTag = document.createElement("script");
+  //   scriptTag.src = midtransUrl;
 
-    const midtransClientKey = "SB-Mid-client-kAcidp2Ky-4mrVCH";
-    scriptTag.setAttribute("data-client-key", midtransClientKey);
-    document.body.appendChild(scriptTag);
-    return () => {
-      document.body.removeChild(scriptTag);
-    };
-  }, []);
+  //   const midtransClientKey = "SB-Mid-client-kAcidp2Ky-4mrVCH";
+  //   scriptTag.setAttribute("data-client-key", midtransClientKey);
+  //   document.body.appendChild(scriptTag);
+  //   return () => {
+  //     document.body.removeChild(scriptTag);
+  //   };
+  // }, []);
 
   return (
     <>
