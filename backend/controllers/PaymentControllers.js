@@ -14,7 +14,7 @@ export const getSnapToken = async (req, res) => {
     },
     item_details: [
       {
-        price: req.body.tiket,
+        price: req.body.harga,
         quantity: req.body.jumlah,
         name: req.body.tiket,
       },
