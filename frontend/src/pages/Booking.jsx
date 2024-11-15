@@ -7,6 +7,7 @@ const Booking = () => {
   const [tanggal, setTanggal] = useState("");
   const [jumlah, setJumlah] = useState(1);
   const [tiket, setTiket] = useState("");
+  const [harga, setHarga] = useState(0);
   const [totalHarga, setTotalHarga] = useState(0);
   // const [order_id, setOrder_id] = useState(0);
 
@@ -23,7 +24,9 @@ const Booking = () => {
     const selectedTiket = e.target.value;
     setTiket(selectedTiket);
 
-    setTotalHarga(selectedTiket * jumlah);
+    if (tiket == "wisata") {
+      setTotalHarga(10000 * jumlah);
+    }
   };
 
   const handleJumlahChange = (e) => {
@@ -34,7 +37,7 @@ const Booking = () => {
     // if (tiket === "wisata") {
     //   price = 10000;
     // }
-    setTotalHarga(tiket * newJumlah);
+    setTotalHarga(harga * newJumlah);
   };
 
   const handleSubmit = async (e) => {
@@ -49,6 +52,7 @@ const Booking = () => {
       tanggal: tanggal,
       jumlah: jumlah,
       tiket: tiket,
+      harga: harga,
       totalHarga: totalHarga,
     };
 
