@@ -12,18 +12,12 @@ export const getSnapToken = async (req, res) => {
       order_id: orderId,
       gross_amount: req.body.totalHarga,
     },
-    item_details: [
-      {
-        price: req.body.harga,
-        quantity: req.body.jumlah,
-        name: req.body.tiket,
-      },
-    ],
-    customer_details: {
-      name: req.body.name,
-      email: req.body.email,
-      tanggal: req.body.tanggal,
-    },
+
+    // customer_details: {
+    //   name: req.body.name,
+    //   email: req.body.email,
+    //   tanggal: req.body.tanggal,
+    // },
   };
 
   const insert =
@@ -69,8 +63,7 @@ export const getSnapToken = async (req, res) => {
           );
           res.status(500).json({ error: "gagal membuat snap token" });
         });
-    }
-  );
+    });
 };
 
 export const getTransaction = (req, res) => {

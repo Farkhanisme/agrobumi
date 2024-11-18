@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const Booking = () => {
@@ -11,7 +11,7 @@ const Booking = () => {
   const [totalHarga, setTotalHarga] = useState(0);
   // const [order_id, setOrder_id] = useState(0);
 
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
 
   // const generateOrderId = (name) => {
   //   const date = new Date().toISOString().split("T")[0];
@@ -24,8 +24,10 @@ const Booking = () => {
     const selectedTiket = e.target.value;
     setTiket(selectedTiket);
 
-    if (tiket == "wisata") {
-      setTotalHarga(10000 * jumlah);
+    if (selectedTiket == "wisata") {
+      let price = 10000;
+      setHarga(price);
+      setTotalHarga(price * jumlah);
     }
   };
 
@@ -40,42 +42,52 @@ const Booking = () => {
     setTotalHarga(harga * newJumlah);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
 
     // const newOrderId = generateOrderId(name);
     // setOrder_id(newOrderId);
 
-    const data = {
-      name: name,
-      email: email,
-      tanggal: tanggal,
-      jumlah: jumlah,
-      tiket: tiket,
-      harga: harga,
-      totalHarga: totalHarga,
-    };
+    // const [orderId] = useState(`order-${Date.now()}`);
 
-    const response = await axios.post(
-      "http://localhost:3000/api/snap-token",
-      data
-    );
-    setToken(response.data.token);
+    try {
+      const data = {
+        // order_id: orderId,
+        name: name,
+        email: email,
+        tanggal: tanggal,
+        jumlah: jumlah,
+        tiket: tiket,
+        harga: harga,
+        totalHarga: totalHarga,
+      };
 
-    window.snap.pay(token, {
-      onSuccess: function (result) {
-        console.log("Payment Success:", result);
-      },
-      onPending: function (result) {
-        console.log("Payment Pending:", result);
-      },
-      onError: function (result) {
-        console.log("Payment Failed:", result);
-      },
-      onClose: function () {
-        console.log("Customer closed the popup without finishing the payment");
-      },
-    });
+      const response = await axios.post(
+        "http://localhost:3000/api/snap-token",
+        data
+      );
+
+      const token = response.data.token;
+
+      window.snap.pay(token, {
+        onSuccess: function (result) {
+          console.log("Payment Success:", result);
+        },
+        onPending: function (result) {
+          console.log("Payment Pending:", result);
+        },
+        onError: function (result) {
+          console.log("Payment Failed:", result);
+        },
+        onClose: function () {
+          console.log(
+            "Customer closed the popup without finishing the payment"
+          );
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching Snap token:", error);
+    }
   };
 
   // useEffect(() => {
@@ -132,7 +144,7 @@ const Booking = () => {
             <h1 className="text-2xl">BOOKING NOW</h1>
             <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
           </span>
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <div className="space-y-5">
             <input
               type="text"
               className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
@@ -169,15 +181,15 @@ const Booking = () => {
               onChange={handleTiketChange}
             >
               <option value="pilih tiket">Pilih Tiket</option>
-              <option value="10000">Wisata</option>
+              <option value="wisata">Wisata</option>
             </select>
             <button
               className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
-              type="submit"
+              onClick={handleSubmit}
             >
               Pesan
             </button>
-          </form>
+          </div>
         </div>
         <div id="detail" className="p-14 text-center w-1/2 space-y-7">
           <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
