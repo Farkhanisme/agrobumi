@@ -6,10 +6,11 @@ import Beranda from "./pages/Beranda";
 import Event from "./pages/Event";
 import About from "./pages/About";
 import Us from "./pages/Us";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <div className="overflow-hidden">
+    <div className="font-poppins">
       <Router>
         <Navbar />
         <Routes>
@@ -18,7 +19,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/us" element={<Us />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>

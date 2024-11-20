@@ -125,7 +125,7 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    text-align: center;
+    text-align: left;
     box-sizing: border-box;
 }
 
@@ -154,16 +154,6 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
-}
-
-.details button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    margin: 0 5px;
 }
 
 .more-link {

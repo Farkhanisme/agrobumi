@@ -5,33 +5,25 @@ import db from "../database/db.js";
 dotenv.config();
 
 export const getSnapToken = async (req, res) => {
+  const { name, email, tanggal, jumlah, tiket, harga, totalHarga } = req.body;
   const orderId = uuidv4();
 
   const parameter = {
     transaction_details: {
       order_id: orderId,
-      gross_amount: req.body.totalHarga,
+      gross_amount: totalHarga,
     },
-
-    // customer_details: {
-    //   name: req.body.name,
-    //   email: req.body.email,
-    //   tanggal: req.body.tanggal,
-    // },
+    customer_details: {
+      first_name: name,
+      email: email,
+    },
   };
 
   const insert =
     "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status) VALUES (?, ?, ?, ?, ?, ?)";
   db.query(
     insert,
-    [
-      orderId,
-      req.body.name,
-      req.body.tanggal,
-      req.body.jumlah,
-      req.body.tiket,
-      "pending",
-    ],
+    [orderId, name, tanggal, jumlah, tiket, "pending"],
     (err, result) => {
       if (err) {
         console.error("pemesanan gagal ditambahkan ke database, error: ", err);
@@ -63,7 +55,8 @@ export const getSnapToken = async (req, res) => {
           );
           res.status(500).json({ error: "gagal membuat snap token" });
         });
-    });
+    }
+  );
 };
 
 export const getTransaction = (req, res) => {

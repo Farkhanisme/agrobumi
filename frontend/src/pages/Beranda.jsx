@@ -1,12 +1,15 @@
 import React from "react";
-import "./Beranda.css";
+import "../styles/Beranda.css";
 
 const App = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="my-24">
       <div className="flex my-14 w-screen justify-center items-center">
         <div className="isi">
-          <div className="content">
+          <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-gray-300">
+            <h1>Narmada <br /> Botanic <br /> Garden</h1>
+          </div>
+          <div className="content pb-10">
             <p>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
             <h1>Let's Explore Now</h1>
             <h1>
@@ -17,10 +20,10 @@ const App = () => {
               Don’t wait, now’s the time to explore Lombok <br />
               and uncover its unique agrotourism wonders.
             </p>
-            <div className="buttons">
-              <a className="explore w-fit flex" href="#">
+            <div className="flex justify-start space-x-10 mt-10">
+              <a class="w-fit flex items-center justify-center space-x-2 bg-green-600 text-white px-6 py-2 rounded-lg" href="#">
                 <span>Explore Now</span>
-                {/* <svg
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -29,11 +32,12 @@ const App = () => {
                   viewBox="0 0 16 16"
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                </svg> */}
+                </svg>
               </a>
-              <a className="fitur w-fit flex" href="#">
+
+              <a className="w-fit flex items-center justify-center space-x-2 bg-cyan-700 text-white px-6 py-2 rounded-lg" href="#">
                 <span>Booking</span>
-                {/* <svg
+                <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
@@ -42,7 +46,7 @@ const App = () => {
                   viewBox="0 0 16 16"
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                </svg> */}
+                </svg>
               </a>
             </div>
           </div>
@@ -64,7 +68,7 @@ const App = () => {
           destinasi Agrowisata Lombok
         </a>
         <div className="mb-10">
-          <img src="section.png" alt="" srcset="" />
+          <img src="section.png" alt="" />
         </div>
         <div className="card-container">
           <div className="card">

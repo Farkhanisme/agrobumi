@@ -9,7 +9,6 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
     font-family: 'Arial', sans-serif;
 }
 
@@ -26,7 +25,6 @@
     font-size: 14px;
     color: #333;
     margin-bottom: 5px;
-    display: block;
 }
 
 .login-form input {
