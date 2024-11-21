@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment/min/moment-with-locales";
 import { registerLocale } from "react-datepicker";
-import id from "date-fns/locale/id"
+import id from "date-fns/locale/id";
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -45,7 +45,7 @@ const Booking = () => {
       const data = {
         name: name,
         email: email,
-        tanggal: tanggal,
+        tanggal: moment(tanggal).format("YYYY-MM-DD"),
         jumlah: jumlah,
         tiket: tiket,
         harga: harga,
@@ -62,6 +62,15 @@ const Booking = () => {
       window.snap.pay(token, {
         onSuccess: function (result) {
           console.log("Payment Success:", result);
+          const mail = {
+            email: email,
+            nama: name,
+            jumlah: jumlah,
+            tanggal: tanggal,
+            tiket: tiket,
+            tiketCode: result.order_id,
+          };
+          axios.post("http://localhost:3000/api/send-notification", mail);
         },
         onPending: function (result) {
           console.log("Payment Pending:", result);
@@ -155,7 +164,7 @@ const Booking = () => {
           <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
-            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black capitalize"
             placeholder="Nama Pemesan"
             value={name}
             readOnly
