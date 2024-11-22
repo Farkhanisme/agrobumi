@@ -80,7 +80,6 @@ export const emailNotif = async (req, res) => {
     html: `
 <!DOCTYPE html>
 <html>
-
 <head>
     <style>
         *,
@@ -454,6 +453,7 @@ export const emailNotif = async (req, res) => {
         :disabled {
             cursor: default;
         }
+
         img,
         svg,
         video,
@@ -476,6 +476,14 @@ export const emailNotif = async (req, res) => {
 
         [hidden]:where(:not([hidden="until-found"])) {
             display: none;
+        }
+
+        .visible {
+            visibility: visible;
+        }
+
+        .collapse {
+            visibility: collapse;
         }
 
         .absolute {
@@ -516,12 +524,36 @@ export const emailNotif = async (req, res) => {
             margin-bottom: 2.5rem;
         }
 
+        .mb-10 {
+            margin-bottom: 2.5rem;
+        }
+
         .me-48 {
             margin-inline-end: 12rem;
         }
 
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .block {
+            display: block;
+        }
+
         .flex {
             display: flex;
+        }
+
+        .table {
+            display: table;
+        }
+
+        .contents {
+            display: contents;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .h-20 {
@@ -540,8 +572,16 @@ export const emailNotif = async (req, res) => {
             width: 5rem;
         }
 
+        .w-3 {
+            width: 0.75rem;
+        }
+
         .w-3\/4 {
             width: 75%;
+        }
+
+        .w-40 {
+            width: 10rem;
         }
 
         .w-fit {
@@ -550,6 +590,18 @@ export const emailNotif = async (req, res) => {
 
         .w-full {
             width: 100%;
+        }
+
+        .border-collapse {
+            border-collapse: collapse;
+        }
+
+        .transform {
+            transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+        }
+
+        .resize {
+            resize: both;
         }
 
         .list-disc {
@@ -653,6 +705,10 @@ export const emailNotif = async (req, res) => {
             padding-top: 2rem;
         }
 
+        .text-right {
+            text-align: right;
+        }
+
         .text-xl {
             font-size: 1.25rem;
             line-height: 1.75rem;
@@ -662,6 +718,14 @@ export const emailNotif = async (req, res) => {
             --tw-text-opacity: 1;
             color: rgb(255 255 255 / var(--tw-text-opacity, 1));
         }
+
+        .underline {
+            text-decoration-line: underline;
+        }
+
+        .outline {
+            outline-style: solid;
+        }
     </style>
 </head>
 
@@ -670,12 +734,12 @@ export const emailNotif = async (req, res) => {
         <div class="flex flex-col items-center justify-center">
             <div class="bg-green-600 rounded-3xl w-fit h-fit top-2 flex overflow-hidden relative text-white">
                 <div class="bg-white rounded-r-full top-8 h-20 w-10 absolute"></div>
-                <div class="flex flex-col my-10 mx-16 w-full">
+                <div class="flex flex-col mb-10 mt-4 mx-16 w-full">
                     <div class="flex justify-between items-end p-3">
-                        <div class="h-20 w-20">
-                            asdas
+                        <div class="h-fit w-40">
+                            <img src="" alt="Narmada Botanic Garden">
                         </div>
-                        <div>
+                        <div class="text-right">
                             No. Pemesanan <br>
                             ${tiketCode}
                         </div>
@@ -725,7 +789,6 @@ export const emailNotif = async (req, res) => {
         </div>
     </div>
 </body>
-
 </html>`,
   };
 

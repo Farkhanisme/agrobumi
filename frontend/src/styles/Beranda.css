@@ -17,13 +17,7 @@
 
 .content h1 {
     font-size: 48px;
-    color: #536493;
     margin: 10px 0;
-}
-
-.content h1 span {
-    font-family: 'Taprom', cursive;
-    color: #8bc34a;
 }
 
 .buttons {

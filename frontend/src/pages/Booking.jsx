@@ -71,6 +71,7 @@ const Booking = () => {
             tiketCode: result.order_id,
           };
           axios.post("http://localhost:3000/api/send-notification", mail);
+          axios.post("http://localhost:3000/api/update-transaction", result.order_id);
         },
         onPending: function (result) {
           console.log("Payment Pending:", result);
