@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment/min/moment-with-locales";
+import { registerLocale } from "react-datepicker";
+import id from "date-fns/locale/id";
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -9,16 +14,9 @@ const Booking = () => {
   const [tiket, setTiket] = useState("");
   const [harga, setHarga] = useState(0);
   const [totalHarga, setTotalHarga] = useState(0);
-  // const [order_id, setOrder_id] = useState(0);
 
-  // const [token, setToken] = useState("");
-
-  // const generateOrderId = (name) => {
-  //   const date = new Date().toISOString().split("T")[0];
-  //   const namePart = name.slice(0, 3).toUpperCase();
-  //   const randomString = Math.random().toString(36).substring(2, 8);
-  //   return `${date}-${namePart}-${randomString}`;
-  // };
+  registerLocale("id", id);
+  moment.locale("id");
 
   const handleTiketChange = (e) => {
     const selectedTiket = e.target.value;
@@ -43,19 +41,11 @@ const Booking = () => {
   };
 
   const handleSubmit = async () => {
-    // e.preventDefault();
-
-    // const newOrderId = generateOrderId(name);
-    // setOrder_id(newOrderId);
-
-    // const [orderId] = useState(`order-${Date.now()}`);
-
     try {
       const data = {
-        // order_id: orderId,
         name: name,
         email: email,
-        tanggal: tanggal,
+        tanggal: moment(tanggal).format("YYYY-MM-DD"),
         jumlah: jumlah,
         tiket: tiket,
         harga: harga,
@@ -72,6 +62,15 @@ const Booking = () => {
       window.snap.pay(token, {
         onSuccess: function (result) {
           console.log("Payment Success:", result);
+          const mail = {
+            email: email,
+            nama: name,
+            jumlah: jumlah,
+            tanggal: tanggal,
+            tiket: tiket,
+            tiketCode: result.order_id,
+          };
+          axios.post("http://localhost:3000/api/send-notification", mail);
         },
         onPending: function (result) {
           console.log("Payment Pending:", result);
@@ -89,49 +88,6 @@ const Booking = () => {
       console.error("Error fetching Snap token:", error);
     }
   };
-
-  // useEffect(() => {
-  //   if (token) {
-  //     window.snap.pay(token, {
-  //       onSuccess: (result) => {
-  //         //   localStorage.setItem("Pembayaran", JSON.stringify(result));
-  //         setToken("");
-  //         setName("");
-  //         setEmail("");
-  //         setTanggal("");
-  //         setJumlah(0);
-  //         setTiket("pilih tiket");
-  //         setTotalHarga(0);
-  //         setOrder_id("");
-  //       },
-  //       onPending: (result) => {
-  //         //   localStorage.setItem("Pembayaran", JSON.stringify(result));
-  //         setToken("");
-  //       },
-  //       onError: (error) => {
-  //         console.log(error);
-  //         setToken("");
-  //       },
-  //       onClose: () => {
-  //         console.log("Pembayaran belum selesai");
-  //         setToken("");
-  //       },
-  //     });
-  //   }
-  // }, [token]);
-
-  // useEffect(() => {
-  //   const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-  //   let scriptTag = document.createElement("script");
-  //   scriptTag.src = midtransUrl;
-
-  //   const midtransClientKey = "SB-Mid-client-kAcidp2Ky-4mrVCH";
-  //   scriptTag.setAttribute("data-client-key", midtransClientKey);
-  //   document.body.appendChild(scriptTag);
-  //   return () => {
-  //     document.body.removeChild(scriptTag);
-  //   };
-  // }, []);
 
   return (
     <>
@@ -159,18 +115,31 @@ const Booking = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            {/* <input
               type="date"
               className="w-full border border-black rounded-md p-1 text-sm text-gray-500"
               placeholder="Tanggal Kunjungan"
               value={tanggal}
               onChange={(e) => setTanggal(e.target.value)}
-            />
-            <input
-              type="number"
+            /> */}
+
+            <DatePicker
               className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
-              placeholder="Jumlah Anggota"
-              value={jumlah}
+              wrapperClassName="w-full"
+              onChange={(date) => setTanggal(date)}
+              selected={tanggal}
+              minDate={new Date()}
+              dateFormat="dd MMMM, yyyy"
+              locale="id"
+              placeholderText="Pilih Tanggal"
+            />
+
+            <input
+              type="text"
+              inputMode="numeric"
+              className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
+              placeholder="Jumlah Tiket"
+              // value={jumlah}
               onChange={handleJumlahChange}
             />
             <select
@@ -191,11 +160,11 @@ const Booking = () => {
             </button>
           </div>
         </div>
-        <div id="detail" className="p-14 text-center w-1/2 space-y-7">
+        <div id="detail" className="p-14 text-center w-1/2 space-y-6">
           <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
-            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b border-black p-1 text-sm placeholder-black capitalize"
             placeholder="Nama Pemesan"
             value={name}
             readOnly
@@ -211,7 +180,7 @@ const Booking = () => {
             type="text"
             className="w-full border-0 border-b border-black p-1 text-sm placeholder-black"
             placeholder="Tanggal Kunjungan"
-            value={tanggal}
+            value={tanggal ? moment(tanggal).format("dddd DD MMMM, YYYY") : ""}
             readOnly
           />
           <input

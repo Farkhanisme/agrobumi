@@ -1,8 +1,6 @@
 import React from "react";
-import Us from "./Us";
-import "./About.css";
+import "../styles/About.css";
  
-
 function AboutUs() {
   return (
     <div className="container my-14">
