@@ -92,7 +92,7 @@ const Booking = () => {
 
   return (
     <>
-      <div id="form" className="flex p-5 my-14">
+      <div id="form" className="flex p-5 mb-14">
         <div
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"

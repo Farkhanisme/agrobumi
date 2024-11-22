@@ -3,8 +3,8 @@ import "../styles/Beranda.css";
 
 const App = () => {
   return (
-    <div className="my-24">
-      <div className="flex my-14 w-screen justify-center items-center">
+    <div>
+      <div className="flex mb-14 w-screen justify-center items-center">
         <div className="isi">
           <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-gray-300">
             <h1>Narmada <br /> Botanic <br /> Garden</h1>

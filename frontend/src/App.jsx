@@ -7,6 +7,7 @@ import Event from "./pages/Event";
 import About from "./pages/About";
 import Us from "./pages/Us";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/us" element={<Us />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Admin />} />
         </Routes>
         <Footer />
       </Router>
