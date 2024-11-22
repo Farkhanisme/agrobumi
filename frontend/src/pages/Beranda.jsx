@@ -53,9 +53,9 @@ const App = () => {
         </div>
 
         <div className="img">
-          <img className="image image1" src="gambar1.jpg" alt="Image 1" />
-          <img className="image image2" src="gambar2.jpg" alt="Image 2" />
-          <img className="image image3" src="gambar3.jpg" alt="Image 3" />
+          <img className="image image1" src="/images/gambar1.png" alt="Image 1" />
+          <img className="image image2" src="/images/gambar2.png" alt="Image 2" />
+          <img className="image image3" src="/images/gambar3.png" alt="Image 3" />
         </div>
       </div>
 
@@ -72,28 +72,28 @@ const App = () => {
         </div>
         <div className="card-container">
           <div className="card">
-            <img alt="Botanic1" height="150" src="#" width="300" />
+            <img alt="Botanic1" height="150" src="/images/botanic1.png" width="300" />
             <h3>Narmada Botanic Garden</h3>
             <a>Open: 9am - 5pm</a>
             <a>Location: Lombok</a>
             <a className="price">Rp. 35,000</a>
           </div>
           <div className="card">
-            <img alt="Botanic2" height="150" src="#" width="300" />
+            <img alt="Botanic2" height="150" src="/images/botanic2.png" width="300" />
             <h3>Narmada Botanic Garden</h3>
             <a>Open: 9am - 5pm</a>
             <a>Location: Lombok</a>
             <a className="price">Rp. 35,000</a>
           </div>
           <div className="card">
-            <img alt="Botanic3" height="150" src="#" width="300" />
+            <img alt="Botanic3" height="150" src="/images/botanic3.png" width="300" />
             <h3>Narmada Botanic Garden</h3>
             <a>Open: 9am - 5pm</a>
             <a>Location: Lombok</a>
             <a className="price">Rp. 35,000</a>
           </div>
           <div className="card">
-            <img alt="Botanic4" height="150" src="#" width="300" />
+            <img alt="Botanic4" height="150" src="/images/botanic4.png" width="300" />
             <h3>Narmada Botanic Garden</h3>
             <a>Open: 9am - 5pm</a>
             <a>Location: Lombok</a>
@@ -105,14 +105,14 @@ const App = () => {
       <div className="w-screen flex flex-wrap justify-center items-center p-10">
         <h2 className="gallery-title">Narmada Botanic Garden gallery</h2>
         <div className="gallery ml-10 p-0">
-          <img alt="Tampilan 1" height="150" src="#" width="300" />
-          <img alt="Tampilan 2" height="150" src="#" width="300" />
-          <img alt="Tampilan 3" height="150" src="#" width="300" />
-          <img alt="Tampilan 4" height="150" src="#" width="300" />
-          <img alt="Tampilan 5" height="150" src="#" width="300" />
-          <img alt="Tampilan 6" height="150" src="#" width="300" />
-          <img alt="Tampilan 7" height="150" src="#" width="300" />
-          <img alt="Tampilan 8" height="150" src="#" width="300" />
+          <img alt="Tampilan 1" src="/images/Tampilan1.png" />
+          <img alt="Tampilan 2" src="/images/Tampilan2.png" />
+          <img alt="Tampilan 3" src="/images/Tampilan3.png" />
+          <img alt="Tampilan 4" src="/images/Tampilan4.png" />
+          <img alt="Tampilan 5" src="/images/Tampilan5.png" />
+          <img alt="Tampilan 6" src="/images/Tampilan6.png" />
+          <img alt="Tampilan 7" src="/images/Tampilan7.png" />
+          <img alt="Tampilan 8" src="/images/Tampilan8.png" />
         </div>
       </div>
     </div>

@@ -149,12 +149,13 @@ h5 {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    padding: 0;
 }
 
 .gallery img {
-    width: 23%;
-    height: 150px;
-    background-color: #e9ecef;
+    width: calc(25% - 10px);
+    height: 100%;
     border-radius: 5px;
     object-fit: cover;
 }
+
