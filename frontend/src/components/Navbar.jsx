@@ -11,7 +11,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <img alt="Narmada Botanic Garden Logo" src="../brand.png" />
+      <Link to="/">
+        <img alt="Narmada Botanic Garden Logo" src="../brand.png" />
+      </Link>
       <ul>
         <li>
           <Link to="/" className={getLinkClass("/")}>
