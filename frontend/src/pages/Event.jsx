@@ -36,7 +36,7 @@ const App = () => {
             </p>
             <div className="flex justify-start space-x-10 mt-10">
               <a
-                className="w-fit flex items-center justify-center space-x-2 bg-green-600 text-white px-6 py-2 rounded-lg"
+                className="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg"
                 href="#"
               >
                 <span>Explore Now</span>
@@ -53,7 +53,7 @@ const App = () => {
               </a>
 
               <a
-                className="w-fit flex items-center justify-center space-x-2 bg-cyan-700 text-white px-6 py-2 rounded-lg"
+                className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg"
                 href="#"
               >
                 <span>Booking</span>

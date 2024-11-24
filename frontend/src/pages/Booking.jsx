@@ -18,6 +18,13 @@ const Booking = () => {
   registerLocale("id", id);
   moment.locale("id");
 
+  const hurufKapital = (str) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   const handleTiketChange = (e) => {
     const selectedTiket = e.target.value;
     setTiket(selectedTiket);
@@ -61,17 +68,8 @@ const Booking = () => {
 
       window.snap.pay(token, {
         onSuccess: function (result) {
-          console.log("Payment Success:", result);
-          const mail = {
-            email: email,
-            nama: name,
-            jumlah: jumlah,
-            tanggal: tanggal,
-            tiket: tiket,
-            tiketCode: result.order_id,
-          };
-          axios.post("http://localhost:3000/api/send-notification", mail);
-          axios.post("http://localhost:3000/api/update-transaction", result.order_id);
+          updateStatus(result.order_id);
+          sendEmail(result.order_id);
         },
         onPending: function (result) {
           console.log("Payment Pending:", result);
@@ -88,6 +86,22 @@ const Booking = () => {
     } catch (error) {
       console.error("Error fetching Snap token:", error);
     }
+  };
+
+  const updateStatus = (orderId) => {
+    axios.post(`http://localhost:3000/api/update-transaction/${orderId}`);
+  };
+
+  const sendEmail = (orderId) => {
+    const mail = {
+      email: email,
+      nama: name,
+      jumlah: jumlah,
+      tanggal: moment(tanggal).format("dddd DD MMMM, YYYY"),
+      tiket: tiket,
+      tiketCode: orderId,
+    };
+    axios.post("http://localhost:3000/api/send-notification", mail);
   };
 
   return (
@@ -107,7 +121,7 @@ const Booking = () => {
               className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
               placeholder="Nama Pemesan"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(hurufKapital(e.target.value))}
             />
             <input
               type="email"
@@ -139,7 +153,7 @@ const Booking = () => {
               type="text"
               inputMode="numeric"
               className="w-full border border-black rounded-md p-1 placeholder-gray-500 text-sm"
-              placeholder="Jumlah Tiket"
+              placeholder="Jumlah Tiket (Otomatis Satu)"
               // value={jumlah}
               onChange={handleJumlahChange}
             />
