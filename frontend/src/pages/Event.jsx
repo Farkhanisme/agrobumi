@@ -20,49 +20,43 @@ const App = () => {
     <div className="space-y-40">
       <div className="flex mb-14 w-screen justify-center items-center">
         <div className="isi">
-          <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-gray-300">
+          <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-text-6">
             <h1>Narmada <br /> Botanic <br /> Garden</h1>
           </div>
-          <div className="content pb-10">
-            <p>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
+          <div className="content pb-10 text-secondary-2 font-bold">
+            <p className="flex font-normal"><img src="/logos/compass.svg" className="mr-2"/>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
             <h1>Let's Explore Now</h1>
             <h1>
-              And <span>Discover Nature</span>,
+              And <span className="text-primary-3 font-taprom font-normal">Discover Nature</span>,
             </h1>
             <h1>Beauty in Lombok.</h1>
-            <p>
+            <p className="font-normal">
               Don’t wait, now’s the time to explore Lombok <br />
               and uncover its unique agrotourism wonders.
             </p>
             <div className="flex justify-start space-x-10 mt-10">
-              <a
-                className="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg"
-                href="#"
-              >
+              <a class="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg" href="#">
                 <span>Explore Now</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
-                  className="bi bi-caret-right-fill"
+                  class="bi bi-caret-right-fill"
                   viewBox="0 0 16 16"
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                 </svg>
               </a>
 
-              <a
-                className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg"
-                href="#"
-              >
+              <a className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg" href="#">
                 <span>Booking</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   fill="currentColor"
-                  className="bi bi-caret-right-fill"
+                  class="bi bi-caret-right-fill"
                   viewBox="0 0 16 16"
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />

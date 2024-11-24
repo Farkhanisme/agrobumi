@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
     background-color: #fff;
     width: 100%;
     position: sticky;
@@ -10,11 +9,6 @@
     left: 0;
     right: 0;
     z-index: 1000;
-}
-
-.navbar img {
-    width: 120px;
-    height: auto;
 }
 
 .navbar ul {

@@ -10,9 +10,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar">
+    <div className="navbar px-10">
       <Link to="/">
-        <img alt="Narmada Botanic Garden Logo" src="../brand.png" />
+        <img className="h-16 w-fit" alt="Narmada Botanic Garden Logo" src="/logos/brand.png" />
       </Link>
       <ul>
         <li>
@@ -36,9 +36,12 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
-      <Link className="login-btn" to="/login">
-        Log In
+      <Link to="/">
+        <img className="h-20 w-fit" alt="Narmada Botanic Garden Logo" src="/logos/brand.jpg" />
       </Link>
+      {/* <Link className="login-btn" to="/login">
+        Log In
+      </Link> */}
     </div>
   );
 };

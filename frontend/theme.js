@@ -57,6 +57,7 @@ const theme = {
       3: "#f3d9c3",
       4: "#fff1db",
       5: "#fff4e2",
+      6: "#F0F0F0",
     },
     warning: {
       1: "#fca119",
