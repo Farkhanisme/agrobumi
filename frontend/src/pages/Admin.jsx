@@ -37,9 +37,6 @@ const Admin = () => {
               <a href="#">User Management</a>
             </li>
             <li>
-              <a href="#">Posts</a>
-            </li>
-            <li>
               <a href="#">Settings</a>
             </li>
             <li>
