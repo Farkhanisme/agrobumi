@@ -68,17 +68,29 @@ export const emailNotif = async (req, res) => {
   const readFileAsync = promisify(fs.readFile);
   const imageAttachment = await readFileAsync("email/brand.png");
 
-  const transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+  //   const transport = nodemailer.createTransport({
+  //     host: "sandbox.smtp.mailtrap.io",
+  //     port: 2525,
+  //     auth: {
+  //       user: "996f553054b946",
+  //       pass: "c108a12b3d31f6",
+  //     },
+  //   });
+
+  let transport = nodemailer.createTransport({
+    service: "gmail",
     auth: {
-      user: "996f553054b946",
-      pass: "c108a12b3d31f6",
+      type: "OAuth2",
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
+      clientId: process.env.MAIL_CLIENT_ID,
+      clientSecret: process.env.MAIL_CLIENT_SECRET,
+      refreshToken: process.env.MAIL_REFRESH_TOKEN,
     },
   });
 
   const mailOptions = {
-    from: "narmadabotanicgarden@email.com",
+    from: "narmadabotanicgarden@gmail.com",
     to: email,
     subject: "Narmada Tiket Code",
     html: `
