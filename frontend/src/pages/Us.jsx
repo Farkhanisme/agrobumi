@@ -3,7 +3,7 @@ import "../styles/Us.css";
 
 function TeamAgrobumi() {
   return (
-    <div className="container my-28">
+    <div className="container">
       <h1>Team Agrobumi Indonesia</h1>
       <div className="level">
         <div

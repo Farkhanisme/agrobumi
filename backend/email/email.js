@@ -1,90 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import dotenv from "dotenv";
-import db from "../database/db.js";
-import nodemailer from "nodemailer";
-import fs from "node:fs";
-import { promisify } from "node:util";
-
-dotenv.config();
-
-export const getSnapToken = async (req, res) => {
-  const { name, email, tanggal, jumlah, tiket, harga, totalHarga } = req.body;
-  const orderId = uuidv4();
-
-  const parameter = {
-    transaction_details: {
-      order_id: orderId,
-      gross_amount: totalHarga,
-    },
-    customer_details: {
-      first_name: name,
-      email: email,
-    },
-  };
-
-  const insert =
-    "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status) VALUES (?, ?, ?, ?, ?, ?)";
-  db.query(
-    insert,
-    [orderId, name, tanggal, jumlah, tiket, "pending"],
-    (err, result) => {
-      if (err) {
-        console.error("pemesanan gagal ditambahkan ke database, error: ", err);
-        return res
-          .status(500)
-          .json({ error: "pesanan gagal ditambahkan ke database" });
-      }
-
-      axios
-        .post(
-          "https://app.sandbox.midtrans.com/snap/v1/transactions",
-          parameter,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Basic ${Buffer.from(
-                process.env.MIDTRANS_SERVER_KEY
-              ).toString("base64")}`,
-            },
-          }
-        )
-        .then((response) => {
-          res.json({ token: response.data.token, order_id: orderId });
-        })
-        .catch((error) => {
-          console.error(
-            "snap token gagal dibuat:",
-            error.response?.data || error.message
-          );
-          res.status(500).json({ error: "gagal membuat snap token" });
-        });
-    }
-  );
-};
-
-export const emailNotif = async (req, res) => {
-  const { email, nama, jumlah, tanggal, tiket, tiketCode } = req.body;
-  const readFileAsync = promisify(fs.readFile);
-  const imageAttachment = await readFileAsync("email/brand.png");
-
-  const transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "996f553054b946",
-      pass: "c108a12b3d31f6",
-    },
-  });
-
-  const mailOptions = {
-    from: "narmadabotanicgarden@email.com",
-    to: email,
-    subject: "Narmada Tiket Code",
-    html: `
-<!DOCTYPE html>
+`<!DOCTYPE html>
 <html>
-
 <head>
     <style>
         *,
@@ -197,13 +112,6 @@ export const emailNotif = async (req, res) => {
             --tw-contain-style: ;
         }
 
-        /*
-! tailwindcss v3.4.15 | MIT License | https://tailwindcss.com
-*/
-        /*
-1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
-2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
-*/
         *,
         ::before,
         ::after {
@@ -249,11 +157,6 @@ export const emailNotif = async (req, res) => {
             /* 2 */
         }
 
-        /*
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-3. Ensure horizontal rules are visible by default.
-*/
         hr {
             height: 0;
             /* 1 */
@@ -263,16 +166,10 @@ export const emailNotif = async (req, res) => {
             /* 3 */
         }
 
-        /*
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
         abbr:where([title]) {
             text-decoration: underline dotted;
         }
 
-        /*
-Remove the default font size and weight for headings.
-*/
         h1,
         h2,
         h3,
@@ -283,17 +180,11 @@ Remove the default font size and weight for headings.
             font-weight: inherit;
         }
 
-        /*
-Reset links to optimize for opt-in styling instead of opt-out.
-*/
         a {
             color: inherit;
             text-decoration: inherit;
         }
 
-        /*
-Add the correct font weight in Edge and Safari.
-*/
         b,
         strong {
             font-weight: bolder;
@@ -313,9 +204,6 @@ Add the correct font weight in Edge and Safari.
             /* 4 */
         }
 
-        /*
-Add the correct font size in all browsers.
-*/
         small {
             font-size: 80%;
         }
@@ -336,11 +224,6 @@ Add the correct font size in all browsers.
             top: -0.5em;
         }
 
-        /*
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-3. Remove gaps between table borders by default.
-*/
         table {
             text-indent: 0;
             /* 1 */
@@ -350,11 +233,6 @@ Add the correct font size in all browsers.
             /* 3 */
         }
 
-        /*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
         button,
         input,
         optgroup,
@@ -382,18 +260,11 @@ Add the correct font size in all browsers.
             /* 3 */
         }
 
-        /*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
         button,
         select {
             text-transform: none;
         }
 
-        /*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
         button,
         input:where([type='button']),
         input:where([type='reset']),
@@ -406,9 +277,6 @@ Remove the inheritance of text transform in Edge and Firefox.
             /* 2 */
         }
 
-        /*
-Use the modern Firefox focus style for all focusable elements.
-*/
         :-moz-focusring {
             outline: auto;
         }
@@ -417,25 +285,15 @@ Use the modern Firefox focus style for all focusable elements.
             box-shadow: none;
         }
 
-        /*
-Add the correct vertical alignment in Chrome and Firefox.
-*/
         progress {
             vertical-align: baseline;
         }
 
-        /*
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
         ::-webkit-inner-spin-button,
         ::-webkit-outer-spin-button {
             height: auto;
         }
 
-        /*
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
         [type='search'] {
             -webkit-appearance: textfield;
             /* 1 */
@@ -443,9 +301,6 @@ Correct the cursor style of increment and decrement buttons in Safari.
             /* 2 */
         }
 
-        /*
-Remove the inner padding in Chrome and Safari on macOS.
-*/
         ::-webkit-search-decoration {
             -webkit-appearance: none;
         }
@@ -457,16 +312,10 @@ Remove the inner padding in Chrome and Safari on macOS.
             /* 2 */
         }
 
-        /*
-Add the correct display in Chrome and Safari.
-*/
         summary {
             display: list-item;
         }
 
-        /*
-Removes the default spacing and border for appropriate elements.
-*/
         blockquote,
         dl,
         dd,
@@ -500,24 +349,14 @@ Removes the default spacing and border for appropriate elements.
             padding: 0;
         }
 
-        /*
-Reset default styling for dialogs.
-*/
         dialog {
             padding: 0;
         }
 
-        /*
-Prevent resizing textareas horizontally by default.
-*/
         textarea {
             resize: vertical;
         }
 
-        /*
-1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-2. Set the default placeholder color to the user's configured gray 400 color.
-*/
         input::placeholder,
         textarea::placeholder {
             opacity: 1;
@@ -526,17 +365,11 @@ Prevent resizing textareas horizontally by default.
             /* 2 */
         }
 
-        /*
-Set the default cursor for buttons.
-*/
         button,
         [role="button"] {
             cursor: pointer;
         }
 
-        /*
-Make sure disabled buttons don't get the pointer cursor.
-*/
         :disabled {
             cursor: default;
         }
@@ -555,18 +388,22 @@ Make sure disabled buttons don't get the pointer cursor.
             /* 2 */
         }
 
-        /*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
-*/
         img,
         video {
             max-width: 100%;
             height: auto;
         }
 
-        /* Make elements with the HTML hidden attribute stay hidden by default */
         [hidden]:where(:not([hidden="until-found"])) {
             display: none;
+        }
+
+        .visible {
+            visibility: visible;
+        }
+
+        .collapse {
+            visibility: collapse;
         }
 
         .absolute {
@@ -602,12 +439,25 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             margin-right: 4rem;
         }
 
+        .my-10 {
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
         .mb-10 {
             margin-bottom: 2.5rem;
         }
 
+        .me-48 {
+            margin-inline-end: 12rem;
+        }
+
         .mt-4 {
             margin-top: 1rem;
+        }
+
+        .block {
+            display: block;
         }
 
         .flex {
@@ -616,6 +466,14 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 
         .table {
             display: table;
+        }
+
+        .contents {
+            display: contents;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .h-20 {
@@ -634,6 +492,10 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             width: 5rem;
         }
 
+        .w-3 {
+            width: 0.75rem;
+        }
+
         .w-3\/4 {
             width: 75%;
         }
@@ -650,17 +512,16 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             width: 100%;
         }
 
-        .table-auto {
-            table-layout: auto;
+        .border-collapse {
+            border-collapse: collapse;
         }
 
-        .border-separate {
-            border-collapse: separate;
+        .transform {
+            transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         }
 
-        .border-spacing-x-10 {
-            --tw-border-spacing-x: 2.5rem;
-            border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
+        .resize {
+            resize: both;
         }
 
         .list-disc {
@@ -685,12 +546,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 
         .justify-between {
             justify-content: space-between;
-        }
-
-        .space-x-10> :not([hidden])~ :not([hidden]) {
-            --tw-space-x-reverse: 0;
-            margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-            margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
         }
 
         .space-y-20> :not([hidden])~ :not([hidden]) {
@@ -757,6 +612,11 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             padding: 1.25rem;
         }
 
+        .px-10 {
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
         .pl-5 {
             padding-left: 1.25rem;
         }
@@ -769,9 +629,22 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             text-align: right;
         }
 
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+
         .text-white {
             --tw-text-opacity: 1;
             color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+        }
+
+        .underline {
+            text-decoration-line: underline;
+        }
+
+        .outline {
+            outline-style: solid;
         }
     </style>
 </head>
@@ -782,7 +655,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             <div class="bg-green-600 rounded-3xl w-fit h-fit top-2 flex overflow-hidden relative text-white">
                 <div class="bg-white rounded-r-full top-8 h-20 w-10 absolute"></div>
                 <div class="flex flex-col mb-10 mt-4 mx-16 w-full">
-                    <div class="flex justify-between items-end space-x-10 p-3">
+                    <div class="flex justify-between items-end p-3">
                         <div class="h-fit w-40">
                             <img src="cid:brand" alt="Narmada Botanic Garden">
                         </div>
@@ -791,25 +664,20 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                             ${tiketCode}
                         </div>
                     </div>
-                    <div class="border-t-2 pt-8">
-                        <table class="border-separate table-auto border-spacing-x-10">
-                            <tr>
-                                <td>Nama Pemesan</td>
-                                <td>${nama}</td>
-                            </tr>
-                            <tr>
-                                <td>Jumlah Tiket</td>
-                                <td>${jumlah}</td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal Kunjungan</td>
-                                <td>${tanggal}</td>
-                            </tr>
-                            <tr>
-                                <td>Jenis Tiket</td>
-                                <td>${tiket}</td>
-                            </tr>
-                        </table>
+                    <div class="border-t-2 pt-8 px-10 flex">
+                        <div class="flex flex-col space-y-5 me-48">
+                            <h1 class="text-xl">Nama Pemesan</h1>
+                            <h1 class="text-xl">Jumlah Pengunjung</h1>
+                            <h1 class="text-xl">Tanggal Kunjungan</h1>
+                            <h1 class="text-xl">Tiket</h1>
+                            <h1 class="text-xl">Jasa Fotografer</h1>
+                        </div>
+                        <div class="flex flex-col space-y-5">
+                            <h1 class="text-xl">${nama}</h1>
+                            <h1 class="text-xl">${jumlah}</h1>
+                            <h1 class="text-xl">${tanggal}</h1>
+                            <h1 class="text-xl">${tiket}</h1>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-white rounded-full bottom-10 -right-4 h-20 w-20 absolute"></div>
@@ -830,9 +698,9 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                     </li>
                 </ul>
             </div>
-            <div class="list border w-3/4 h-fit border-black rounded-xl p-5">
-                Note:
-                <ul class="list-disc pl-5">
+            <div class="border w-3/4 h-fit border-black rounded-xl p-5">
+                Note
+                <ul>
                     <li>Tiket ini hanya berlaku untuk satu kali kunjungan.</li>
                     <li>Harap datang 15 menit sebelum jadwal yang tertera.</li>
                     <li>Pastikan untuk membawa perlengkapan pribadi seperti topi atau kacamata hitam.</li>
@@ -841,53 +709,4 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         </div>
     </div>
 </body>
-
-</html>
-    `,
-    attachments: [
-      {
-        filename: "brand.png",
-        content: imageAttachment,
-        encoding: "base64",
-        cid: "brand",
-      },
-    ],
-  };
-
-  transport.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log("Error:", error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-};
-
-export const getTransaction = (req, res) => {
-  const select = "SELECT * FROM booking ORDER BY tanggal DESC";
-  db.query(select, (err, result) => {
-    if (err) {
-      console.error("data gagal diambil", err);
-      return res.status(500).json({ error: "gagal mengambil data transaksi" });
-    }
-    res.json({ transaction: result });
-  });
-};
-
-export const updateTransaction = (req, res) => {
-  const { order_id } = req.params;
-
-  const update = "UPDATE booking SET status = ? WHERE order_id = ?";
-  db.query(update, ["success", order_id], (err, result) => {
-    if (err) {
-      console.error("data gagal diupdate", err);
-      return res.status(500).json({ error: "transaksi gagal diupdate" });
-    }
-
-    if (result.affectedRows === 0) {
-      console.log("tidak ada data yang memiliki id tersebut");
-      return res.status(404).json({ error: "data tidak ditemukan" });
-    }
-    res.status(200).json({ message: "data berhasil diupdate" });
-  });
-};
+</html>`

@@ -6,17 +6,17 @@ const App = () => {
     <div>
       <div className="flex mb-14 w-screen justify-center items-center">
         <div className="isi">
-          <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-gray-300">
+          <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-text-6">
             <h1>Narmada <br /> Botanic <br /> Garden</h1>
           </div>
-          <div className="content pb-10 text-secondary-2">
-            <p>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
+          <div className="content pb-10 text-secondary-2 font-bold">
+            <p className="flex font-normal"><img src="/logos/compass.svg" className="mr-2"/>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
             <h1>Let's Explore Now</h1>
             <h1>
-              And <span className="text-primary-3 font-taprom">Discover Nature</span>,
+              And <span className="text-primary-3 font-taprom font-normal">Discover Nature</span>,
             </h1>
             <h1>Beauty in Lombok.</h1>
-            <p>
+            <p className="font-normal">
               Don’t wait, now’s the time to explore Lombok <br />
               and uncover its unique agrotourism wonders.
             </p>
@@ -60,15 +60,15 @@ const App = () => {
       </div>
 
       <div className="explore2">
-        <h5 className="font-bold text-5xl my-10">
+        <h5 className="font-bold text-5xl my-10 font-volkhov">
           Explore Narmada Botanic Garden
         </h5>
-        <a className="subtitle text-md">
+        <a className="subtitle text-md font-poppins">
           Selamat di Narmada Botanic Garden, <br />
           destinasi Agrowisata Lombok
         </a>
         <div className="mb-10">
-          <img src="section.png" alt="" />
+          <img src="images/section.png" alt="" />
         </div>
         <div className="card-container">
           <div className="card">
