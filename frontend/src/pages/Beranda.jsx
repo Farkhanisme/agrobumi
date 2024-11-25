@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/Beranda.css";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
               and uncover its unique agrotourism wonders.
             </p>
             <div className="flex justify-start space-x-10 mt-10">
-              <a class="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg" href="#">
+              <Link to="/event" class="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg">
                 <span>Explore Now</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -33,9 +34,9 @@ const App = () => {
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                 </svg>
-              </a>
+              </Link>
 
-              <a className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg" href="#">
+              <Link to="/booking" className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg">
                 <span>Booking</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +48,7 @@ const App = () => {
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

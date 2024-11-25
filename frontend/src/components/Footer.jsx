@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <div className="w-screen h-fit bg-white flex justify-between p-20 font-mono border border-t-black">
       <img
-        src="/logos/brand.jpg"
+        src="/logos/brand.png"
         alt="Narmada Botanic Garden"
-        className="w-fit h-28"
+        className="w-fit h-16"
       />
       <div id="information" className="flex justify-evenly w-full">
         <div id="social-media" className="flex flex-col space-y-2">

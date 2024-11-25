@@ -12,7 +12,11 @@ const Navbar = () => {
   return (
     <div className="navbar px-10">
       <Link to="/">
-        <img className="h-16 w-fit" alt="Narmada Botanic Garden Logo" src="/logos/brand.png" />
+        <img
+          className="h-20 w-fit"
+          alt="Narmada Botanic Garden Logo"
+          src="/logos/brand.jpg"
+        />
       </Link>
       <ul>
         <li>
@@ -26,19 +30,18 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/about" className={getLinkClass("/about")}>
-            About Us
-          </Link>
-        </li>
-        <li>
           <Link to="/booking" className={getLinkClass("/booking")}>
             Booking
           </Link>
         </li>
       </ul>
-      <Link to="/">
-        <img className="h-20 w-fit" alt="Narmada Botanic Garden Logo" src="/logos/brand.jpg" />
-      </Link>
+      <ul>
+        <li>
+          <Link to="/about" className={getLinkClass("/about")}>
+            About Us
+          </Link>
+        </li>
+      </ul>
       {/* <Link className="login-btn" to="/login">
         Log In
       </Link> */}

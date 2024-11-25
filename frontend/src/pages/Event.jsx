@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Event.css";
 
 const App = () => {
@@ -18,16 +19,25 @@ const App = () => {
 
   return (
     <div className="space-y-40">
-      <div className="flex mb-14 w-screen justify-center items-center">
+      <div className="flex w-screen justify-center items-center">
         <div className="isi">
           <div className="font-bold text-8xl -z-10 absolute -rotate-90 -left-20 text-text-6">
-            <h1>Narmada <br /> Botanic <br /> Garden</h1>
+            <h1>
+              Narmada <br /> Botanic <br /> Garden
+            </h1>
           </div>
           <div className="content pb-10 text-secondary-2 font-bold">
-            <p className="flex font-normal"><img src="/logos/compass.svg" className="mr-2"/>Let’s Discover the Wonders of Lombok’s Agrotourism</p>
+            <p className="flex font-normal">
+              <img src="/logos/compass.svg" className="mr-2" />
+              Let’s Discover the Wonders of Lombok’s Agrotourism
+            </p>
             <h1>Let's Explore Now</h1>
             <h1>
-              And <span className="text-primary-3 font-taprom font-normal">Discover Nature</span>,
+              And{" "}
+              <span className="text-primary-3 font-taprom font-normal">
+                Discover Nature
+              </span>
+              ,
             </h1>
             <h1>Beauty in Lombok.</h1>
             <p className="font-normal">
@@ -35,7 +45,10 @@ const App = () => {
               and uncover its unique agrotourism wonders.
             </p>
             <div className="flex justify-start space-x-10 mt-10">
-              <a class="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg" href="#">
+              <a
+                class="w-fit flex items-center justify-center space-x-2 bg-primary-3 text-text-4 px-6 py-2 rounded-lg"
+                href="#explore"
+              >
                 <span>Explore Now</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +62,10 @@ const App = () => {
                 </svg>
               </a>
 
-              <a className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg" href="#">
+              <Link
+                to="/booking"
+                className="w-fit flex items-center justify-center space-x-2 bg-secondary-2 text-text-4 px-6 py-2 rounded-lg"
+              >
                 <span>Booking</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -61,20 +77,32 @@ const App = () => {
                 >
                   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
 
         <div className="img">
-          <img className="image image1" src="/images/gambar1.png" alt="Image 1" />
-          <img className="image image2" src="/images/gambar2.png" alt="Image 2" />
-          <img className="image image3" src="/images/gambar3.png" alt="Image 3" />
+          <img
+            className="image image1"
+            src="/images/gambar1.png"
+            alt="Image 1"
+          />
+          <img
+            className="image image2"
+            src="/images/gambar2.png"
+            alt="Image 2"
+          />
+          <img
+            className="image image3"
+            src="/images/gambar3.png"
+            alt="Image 3"
+          />
         </div>
       </div>
 
-      <div className="container">
-        <div className="card-container">
+      <div className="container" id="explore">
+        <div className="card-container my-20">
           <div className="card">
             <img
               alt="Botanic1"
@@ -94,14 +122,20 @@ const App = () => {
               >
                 Detail
               </button>
+              <Link to='/booking'>
+              
               <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
                 Pesan
               </button>
+              </Link>
             </div>
 
             {showDetails.card1 && (
               <div className="details mt-4">
-                <p>Acara Memasak masakan Tradisional untuk para pelancong mancanegara.</p>
+                <p>
+                  Acara Memasak masakan Tradisional untuk para pelancong
+                  mancanegara.
+                </p>
               </div>
             )}
           </div>
@@ -130,7 +164,10 @@ const App = () => {
             </div>
             {showDetails.card2 && (
               <div className="details mt-4">
-                <p>Education Class di Narmada Botanic Garden menggabungkan pembelajaran dengan pengalaman alam terbuka.</p>
+                <p>
+                  Education Class di Narmada Botanic Garden menggabungkan
+                  pembelajaran dengan pengalaman alam terbuka.
+                </p>
               </div>
             )}
           </div>
@@ -159,7 +196,11 @@ const App = () => {
             </div>
             {showDetails.card3 && (
               <div className="details mt-4">
-                <p>Narmada Botanic Garden menawarkan ruang untuk acara privat seperti garden party, pesta ulang tahun, reuni keluarga, hingga acara perusahaan.</p>
+                <p>
+                  Narmada Botanic Garden menawarkan ruang untuk acara privat
+                  seperti garden party, pesta ulang tahun, reuni keluarga,
+                  hingga acara perusahaan.
+                </p>
               </div>
             )}
           </div>
@@ -188,14 +229,13 @@ const App = () => {
             </div>
             {showDetails.card4 && (
               <div className="details mt-4">
-                <p>Para pengunjung dapat merasakan atmosfer khas Korea dan Jepang melalui berbagai spot foto tematik yang kami disediakan .</p>
+                <p>
+                  Para pengunjung dapat merasakan atmosfer khas Korea dan Jepang
+                  melalui berbagai spot foto tematik yang kami disediakan .
+                </p>
               </div>
             )}
           </div>
-        </div>
-
-        <div className="more-link">
-          <a href="#">Lainnya</a>
         </div>
       </div>
     </div>

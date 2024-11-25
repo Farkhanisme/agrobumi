@@ -864,7 +864,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 };
 
 export const getTransaction = (req, res) => {
-  const select = "SELECT * FROM booking ORDER BY tanggal DESC";
+  const select = "SELECT * FROM booking ORDER BY tanggal ASC";
   db.query(select, (err, result) => {
     if (err) {
       console.error("data gagal diambil", err);
