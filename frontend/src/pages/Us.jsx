@@ -36,10 +36,10 @@ function TeamAgrobumi() {
         />
         <div
           className="person"
-          style={{ backgroundImage: `url('/person1.jpg')` }}
+          style={{ backgroundImage: `url('/roihan.jpg')` }}
         />
       </div>
-    </div>
+    </div> 
   );
 }
 

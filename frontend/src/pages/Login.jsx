@@ -12,7 +12,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container mb-28 mt-36 mx-auto">
+    <div className="login-container mt-16 mb-28 mx-auto">
       <div className="login-header">
         <h1>Narmada Botanic Garden</h1>
       </div>

@@ -71,6 +71,7 @@ const Booking = () => {
             tiketCode: result.order_id,
           };
           axios.post("http://localhost:3000/api/send-notification", mail);
+          axios.post("http://localhost:3000/api/update-transaction", result.order_id);
         },
         onPending: function (result) {
           console.log("Payment Pending:", result);
@@ -91,7 +92,7 @@ const Booking = () => {
 
   return (
     <>
-      <div id="form" className="flex p-5 my-14">
+      <div id="form" className="flex p-5 mb-14">
         <div
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
