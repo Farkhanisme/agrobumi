@@ -110,7 +110,7 @@ export const emailNotif = async (req, res) => {
   const mailOptions = {
     from: "narmadabotanicgarden@gmail.com",
     to: email,
-    subject: "Narmada Tiket Code",
+    subject: "Narmada Ticket Code",
     html: personalizedHtml,
     attachments: [
       {
