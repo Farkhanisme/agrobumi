@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import moment from "moment/min/moment-with-locales";
 import "../styles/Admin.css";
 
 const Admin = () => {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    navigate("/login");
+  }
+  
   moment.locale("id");
 
   const [transactions, setTransactions] = useState([]);
-
-  let i = 1;
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/get-transaction")
       .then((response) => {
-        console.log(response);
-
         setTransactions(response.data.transaction);
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
       });
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
     <div className="admin-container">
@@ -40,7 +50,7 @@ const Admin = () => {
               <a href="#">Settings</a>
             </li>
             <li>
-              <a href="#">Logout</a>
+              <button onClick={logout}>Logout</button>
             </li>
           </ul>
         </nav>
@@ -56,40 +66,6 @@ const Admin = () => {
         {/* Data Table */}
         <section className="data-table">
           <h2>Transaction Table</h2>
-          {/* <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td>Admin</td>
-                <td>
-                  <button className="edit">Edit</button>
-                  <button className="delete">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jane Smith</td>
-                <td>jane.smith@example.com</td>
-                <td>User</td>
-                <td>
-                  <button className="edit">Edit</button>
-                  <button className="delete">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table> */}
-
           <table>
             <thead>
               <tr>
@@ -103,9 +79,9 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-              {transactions.map((transaction) => (
+              {transactions.map((transaction, index) => (
                 <tr key={transaction.order_id}>
-                  <td>{i++}</td>
+                  <td>{index + 1}</td>
                   <td>{transaction.order_id}</td>
                   <td>{transaction.nama}</td>
                   <td>

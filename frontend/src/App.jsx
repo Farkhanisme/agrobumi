@@ -13,6 +13,7 @@ import About from "./pages/About";
 import Us from "./pages/Us";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import Register from "./pages/Register"
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function Content() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/us" element={<Us />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Admin />} />
       </Routes>
 

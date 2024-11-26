@@ -32,6 +32,14 @@
     padding: 15px 20px;
     transition: 0.3s;
   }
+
+  .sidebar nav ul li button {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 15px 20px;
+    transition: 0.3s;
+  }
   
   .sidebar nav ul li a:hover {
     background-color: #575757;

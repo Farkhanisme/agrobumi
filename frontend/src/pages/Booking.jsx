@@ -39,11 +39,6 @@ const Booking = () => {
   const handleJumlahChange = (e) => {
     const newJumlah = parseInt(e.target.value);
     setJumlah(newJumlah);
-
-    // let price = 0;
-    // if (tiket === "wisata") {
-    //   price = 10000;
-    // }
     setTotalHarga(harga * newJumlah);
   };
 
@@ -99,7 +94,7 @@ const Booking = () => {
       jumlah: jumlah,
       tanggal: moment(tanggal).format("dddd DD MMMM, YYYY"),
       tiket: tiket,
-      tiketCode: orderId,
+      ticketCode: orderId,
     };
     axios.post("http://localhost:3000/api/send-notification", mail);
   };
@@ -190,35 +185,35 @@ const Booking = () => {
           <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
-            className="w-full border-0 border-b-2 border-black p-1 text-sm placeholder-black capitalize"
+            className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black capitalize"
             placeholder="Nama Pemesan"
             value={name}
             readOnly
           />
           <input
             type="email"
-            className="w-full border-0 border-b-2 border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black"
             placeholder="Email"
             value={email}
             readOnly
           />
           <input
             type="text"
-            className="w-full border-0 border-b-2 border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black"
             placeholder="Tanggal Kunjungan"
             value={tanggal ? moment(tanggal).format("dddd DD MMMM, YYYY") : ""}
             readOnly
           />
           <input
             type="number"
-            className="w-full border-0 border-b-2 border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black"
             placeholder="Jumlah Anggota"
             value={jumlah}
             readOnly
           />
           <input
             type="number"
-            className="w-full border-0 border-b-2 border-black p-1 text-sm placeholder-black"
+            className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black"
             placeholder="Total Harga"
             value={totalHarga}
             readOnly

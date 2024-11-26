@@ -720,12 +720,12 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             <div
               class="flex md:flex-row flex-col md:justify-between justify-center md:items-end items-center md:space-x-10 space-x-2 p-3"
             >
-              <div class="h-fit w-40 border">
-                <img src="brand.png" alt="Narmada Botanic Garden" />
+              <div class="h-fit w-40">
+                <img src="cid:brand" alt="Narmada Botanic Garden" />
               </div>
-              <div class="md:text-right text-center border md:w-fit w-2/3">
+              <div class="md:text-right text-center md:w-fit w-2/3">
                 No. Pemesanan <br />
-                <p class="text-wrap">assdasdas-fasasfdssda-sfsdfafadsdfsdf</p>
+                <p class="text-wrap">{{ ticketCode }}</p>
               </div>
             </div>
             <div class="border-t-2 pt-8">
@@ -734,19 +734,19 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
               >
                 <tr>
                   <td>Nama Pemesan</td>
-                  <td>${nama}</td>
+                  <td>{{ nama }}</td>
                 </tr>
                 <tr>
                   <td>Jumlah Tiket</td>
-                  <td>${jumlah}</td>
+                  <td>{{ jumlah }}</td>
                 </tr>
                 <tr>
                   <td>Tanggal Kunjungan</td>
-                  <td>${tanggal}</td>
+                  <td>{{ tanggal }}</td>
                 </tr>
                 <tr>
                   <td>Jenis Tiket</td>
-                  <td>${tiket}</td>
+                  <td>{{ tiket }}</td>
                 </tr>
               </table>
             </div>

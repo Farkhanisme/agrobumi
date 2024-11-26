@@ -1,14 +1,35 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const respon = await axios.post("http://localhost:3000/login", {
+        username,
+        password,
+      });
+      localStorage.setItem("token", respon.data.token);
+      console.log(respon.data.token);
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+
+      if (error.response) {
+        setError(error.response.data.message || "Ada Kesalahan!");
+      } else {
+        setError("Login gagal :(");
+      }
+    }
   };
 
   return (
@@ -19,12 +40,12 @@ const Login = () => {
       <form onSubmit={handleSubmit} className="login-form">
         <label htmlFor="email">Nama</label>
         <input
-        className="w-full"
+          className="w-full"
           type="text"
           id="email"
           placeholder="Masukkan Nama"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <label htmlFor="password">Password</label>
@@ -50,6 +71,7 @@ const Login = () => {
           </p>
         </div>
       </form>
+      <span>{error}</span>
     </div>
   );
 };
