@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  useLocation,
+  useLocation, Link
 } from "react-router-dom";
 import Booking from "./pages/Booking";
 import Beranda from "./pages/Beranda";
@@ -14,6 +14,7 @@ import Us from "./pages/Us";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Register from "./pages/Register"
+
 
 function App() {
   return (
