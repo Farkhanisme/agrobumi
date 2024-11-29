@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment/min/moment-with-locales";
 import Dashboard from "./Dashboard";
 import Us from "./Us";

@@ -106,7 +106,7 @@ const Booking = () => {
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
         >
-          <span className="text-primary-3">
+          <span className="text-green-600">
             <h1 className="text-2xl">BOOKING NOW</h1>
             <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
           </span>
@@ -167,13 +167,13 @@ const Booking = () => {
                 value={tiket}
                 onChange={handleTiketChange}
               >
-                <option value="pilih tiket" className="bg-black">Pilih Tiket</option>
+                <option value="pilih tiket">Pilih Tiket</option>
                 <option value="wisata">Wisata</option>
               </select>
             </div>
 
             <button
-              className="bg-prtext-primary-3 rounded-md p-1 w-24 text-white float-right"
+              className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
               onClick={handleSubmit}
             >
               Pesan
@@ -182,7 +182,7 @@ const Booking = () => {
           </div>
         </div>
         <div id="detail" className="p-14 text-center w-1/2 space-y-6">
-          <h1 className="text-primary-3 mb-3 text-2xl">Detail Pemesanan</h1>
+          <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
             className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black capitalize"

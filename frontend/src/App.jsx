@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  useLocation, Link
+  useLocation,
 } from "react-router-dom";
 import Booking from "./pages/Booking";
 import Beranda from "./pages/Beranda";
