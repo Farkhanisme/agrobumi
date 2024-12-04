@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Register from "./pages/Register"
 
+
 function App() {
   return (
     <div className="font-poppins">
