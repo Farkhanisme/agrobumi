@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,6 +14,7 @@ const Booking = () => {
   const [tiket, setTiket] = useState("");
   const [harga, setHarga] = useState(0);
   const [totalHarga, setTotalHarga] = useState(0);
+  const [excludedDates, setExcludedDates] = useState([]);
 
   registerLocale("id", id);
   moment.locale("id");
@@ -99,6 +100,33 @@ const Booking = () => {
     axios.post("http://localhost:3000/api/send-notification", mail);
   };
 
+  useEffect(() => {
+    const fetchExcludedDates = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/ambil-libur");
+        const dates = response.data.exclude.flatMap((date) => {
+          if (date.end) {
+            const range = [];
+            let current = moment(date.start);
+            const end = moment(date.end);
+            while (current <= end) {
+              range.push(new Date(current));
+              current = current.add(1, "days");
+            }
+            return range;
+          } else {
+            return [new Date(date.start)];
+          }
+        });
+        setExcludedDates(dates);
+      } catch (error) {
+        console.error("Error fetching excluded dates:", error);
+      }
+    };
+  
+    fetchExcludedDates();
+  }, []);  
+
   return (
     <>
       <div id="form" className="flex p-5 mb-14">
@@ -144,6 +172,7 @@ const Booking = () => {
                 dateFormat="dd MMMM, yyyy"
                 locale="id"
                 placeholderText="Pilih Tanggal"
+                excludeDates={excludedDates}
               />
             </div>
 
@@ -178,7 +207,6 @@ const Booking = () => {
             >
               Pesan
             </button>
-
           </div>
         </div>
         <div id="detail" className="p-14 text-center w-1/2 space-y-6">

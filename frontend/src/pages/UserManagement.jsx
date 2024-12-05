@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/UserManagement.css";
+import axios from "axios";
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -7,14 +8,15 @@ function UserManagement() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost/react-php-backend/get_users.php");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsers(data);
+        const response = await axios.get(
+          "http://localhost:3000/api/get-user"
+        );
+        console.log(response);
+        
+        setUsers(response.data.users);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching transactions:", error);
+        setError("Failed to fetch transactions.");
       }
     };
 
@@ -32,7 +34,7 @@ function UserManagement() {
             <tr>
               <th>No</th>
               <th>Nama</th>
-              <th>Email</th>
+              <th>Password</th>
               <th>Role</th>
             </tr>
           </thead>
@@ -41,9 +43,8 @@ function UserManagement() {
               users.map((user, index) => (
                 <tr key={user.id}>
                   <td>{index + 1}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
+                  <td>{user.username}</td>
+                  <td>{user.password}</td>
                 </tr>
               ))
             ) : (
