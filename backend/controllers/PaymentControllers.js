@@ -159,3 +159,15 @@ export const updateTransaction = (req, res) => {
     res.status(200).json({ message: "data berhasil diupdate" });
   });
 };
+
+
+export const getUser = async (req, res) => {
+  const select = "SELECT * FROM users";
+  try {
+    const [rows] = await db.query(select);
+    res.json({ users: rows });
+  } catch (error) {
+    console.error("data gagal diambil", error);
+    return res.status(500).json({ error: "gagal mengambil data transaksi" });
+  }
+};

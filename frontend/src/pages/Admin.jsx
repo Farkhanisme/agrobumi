@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/min/moment-with-locales";
 import Dashboard from "./Dashboard";
-import Us from "./Us";
+import UserManagement from './UserManagement';
 import Settings from "./Settings";
 import "../styles/Admin.css";
 
@@ -45,13 +45,14 @@ const Admin = () => {
       navigate("/");
     }
   };
+  
 
   const renderSection = () => {
     switch (currentSection) {
       case "dashboard":
         return <Dashboard />;
       case "userManagement":
-        return <Us />;
+        return <UserManagement />;
       case "settings":
         return <Settings />;
       default:

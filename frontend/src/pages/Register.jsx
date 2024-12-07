@@ -26,7 +26,7 @@ const Register = () => {
 
   return (
     <div className="login-page">
-      {/* Kolom Kiri: Form Registrasi */}
+      
       <div className="login-container">
         <div className="login-header">
           <h1>Narmada Botanic Garden</h1>
