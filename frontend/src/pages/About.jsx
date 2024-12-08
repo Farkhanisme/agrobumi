@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/About.css";
- 
+
 function AboutUs() {
   return (
     <div className="container">

@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import "../styles/Event.css";
 
 const App = () => {
-  const [showDetails, setShowDetails] = useState({
-    card1: false,
-    card2: false,
-    card3: false,
-    card4: false,
-  });
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupContent, setPopupContent] = useState("");
 
-  const handleDetailClick = (card) => {
-    setShowDetails((prevState) => ({
-      ...prevState,
-      [card]: !prevState[card],
-    }));
+  const handleDetailClick = (card, content) => {
+    setPopupContent(content);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   };
 
   return (
@@ -118,26 +116,21 @@ const App = () => {
             <div className="flex justify-end space-x-5 border-t-2 py-5">
               <button
                 className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4"
-                onClick={() => handleDetailClick("card1")}
+                onClick={() =>
+                  handleDetailClick(
+                    "card1",
+                    "Acara Memasak masakan Tradisional untuk para pelancong mancanegara"
+                  )
+                }
               >
                 Detail
               </button>
-              <Link to='/booking'>
-              
-              <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
-                Pesan
-              </button>
+              <Link to="/booking">
+                <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
+                  Pesan
+                </button>
               </Link>
             </div>
-
-            {showDetails.card1 && (
-              <div className="details mt-4">
-                <p>
-                  Acara Memasak masakan Tradisional untuk para pelancong
-                  mancanegara.
-                </p>
-              </div>
-            )}
           </div>
 
           <div className="card">
@@ -154,22 +147,21 @@ const App = () => {
             <div className="flex justify-end space-x-5 border-t-2 py-5">
               <button
                 className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4"
-                onClick={() => handleDetailClick("card2")}
+                onClick={() =>
+                  handleDetailClick(
+                    "card2",
+                    "Education Class di Narmada Botanic Garden menggabungkan pembelajaran dengan pengalaman alam terbuka."
+                  )
+                }
               >
                 Detail
               </button>
-              <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
-                Pesan
-              </button>
+              <Link to="/booking">
+                <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
+                  Pesan
+                </button>
+              </Link>
             </div>
-            {showDetails.card2 && (
-              <div className="details mt-4">
-                <p>
-                  Education Class di Narmada Botanic Garden menggabungkan
-                  pembelajaran dengan pengalaman alam terbuka.
-                </p>
-              </div>
-            )}
           </div>
 
           <div className="card">
@@ -186,23 +178,21 @@ const App = () => {
             <div className="flex justify-end space-x-5 border-t-2 py-5">
               <button
                 className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4"
-                onClick={() => handleDetailClick("card3")}
+                onClick={() =>
+                  handleDetailClick(
+                    "card3",
+                    "Narmada Botanic Garden menawarkan ruang untuk acara privat seperti garden party, pesta ulang tahun, reuni keluarga, hingga acara perusahaan."
+                  )
+                }
               >
                 Detail
               </button>
-              <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
-                Pesan
-              </button>
+              <Link to="/booking">
+                <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
+                  Pesan
+                </button>
+              </Link>
             </div>
-            {showDetails.card3 && (
-              <div className="details mt-4">
-                <p>
-                  Narmada Botanic Garden menawarkan ruang untuk acara privat
-                  seperti garden party, pesta ulang tahun, reuni keluarga,
-                  hingga acara perusahaan.
-                </p>
-              </div>
-            )}
           </div>
 
           <div className="card">
@@ -219,25 +209,36 @@ const App = () => {
             <div className="flex justify-end space-x-5 border-t-2 py-5">
               <button
                 className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4"
-                onClick={() => handleDetailClick("card4")}
+                onClick={() =>
+                  handleDetailClick(
+                    "card4",
+                    "Para pengunjung dapat merasakan atmosfer khas Korea dan Jepang melalui berbagai spot foto tematik yang kami disediakan."
+                  )
+                }
               >
                 Detail
               </button>
-              <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
-                Pesan
-              </button>
+              <Link to="/booking">
+                <button className="outline outline-1 outline-black bg-white text-blue-800 rounded-md py-1 px-4">
+                  Pesan
+                </button>
+              </Link>
             </div>
-            {showDetails.card4 && (
-              <div className="details mt-4">
-                <p>
-                  Para pengunjung dapat merasakan atmosfer khas Korea dan Jepang
-                  melalui berbagai spot foto tematik yang kami disediakan .
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>
+
+      {isPopupOpen && (
+        <div className="popup">
+          <div className="popup-content">
+            <button className="close-btn" onClick={closePopup}>
+              &times;
+            </button>
+            <h2>Detail Event</h2>
+            <p>{popupContent}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
