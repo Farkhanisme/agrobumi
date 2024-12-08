@@ -3,17 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/min/moment-with-locales";
 import Dashboard from "./Dashboard";
-import UserManagement from './UserManagement';
-import Settings from "./Settings";
+import Sidebar from "../components/Sidebar";
 import "../styles/Admin.css";
+import toast, { Toaster } from "react-hot-toast";
 
 const Admin = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [currentSection, setCurrentSection] = useState("dashboard");
 
   useEffect(() => {
     if (!token) {
@@ -30,71 +27,23 @@ const Admin = () => {
         setTransactions(response.data.transaction);
       } catch (error) {
         console.error("Error fetching transactions:", error);
-        setError("Failed to fetch transactions.");
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchTransactions();
+    // fetchTransactions();
+
+    toast.promise(fetchTransactions(), {
+      loading: "Loading",
+      success: "Got the data",
+      error: "Error when fetching",
+    });
   }, [token, navigate]);
-  
-  const logout = () => {
-    if (window.confirm("Are you sure you want to log out?")) {
-      localStorage.removeItem("token");
-      navigate("/");
-    }
-  };
-  
-
-  const renderSection = () => {
-    switch (currentSection) {
-      case "dashboard":
-        return <Dashboard />;
-      case "userManagement":
-        return <UserManagement />;
-      case "settings":
-        return <Settings />;
-      default:
-        return <Dashboard />;
-    }
-  };
-
-  if (loading) {
-    return <div>Loading transactions...</div>;
-  }
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div className="admin-container">
-      {/* Sidebar */}
-      <div className="sidebar">
-        <h2>Admin Panel</h2>
-        <nav>
-          <ul>
-            <li>
-              <button onClick={() => setCurrentSection("dashboard")}>
-                Dashboard
-              </button>
-            </li>
-            <li>
-              <button onClick={() => setCurrentSection("userManagement")}>
-                User Management
-              </button>
-            </li>
-            <li>
-              <button onClick={() => setCurrentSection("settings")}>
-                Settings
-              </button>
-            </li>
-            <li>
-              <button onClick={logout}>Logout</button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <Toaster />
+      
+      <Sidebar />
 
       {/* Main Content */}
       <div className="main-content">
@@ -105,40 +54,39 @@ const Admin = () => {
 
         {/* Render the selected section */}
         <section className="data-table">
-          {renderSection()}
-          {currentSection === "dashboard" && transactions.length > 0 && (
-            <div>
-              <h2>Transaction Table</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Order ID</th>
-                    <th>Nama</th>
-                    <th>Tanggal</th>
-                    <th>Jumlah</th>
-                    <th>Tiket</th>
-                    <th>Status</th>
+          <Dashboard />
+          <div className="my-10">
+            <h2>Transaction Table</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Order ID</th>
+                  <th>Nama</th>
+                  <th>Tanggal</th>
+                  <th>Jumlah</th>
+                  <th>Tiket</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={transaction.order_id}>
+                    <td>{index + 1}</td>
+                    <td>{transaction.order_id}</td>
+                    <td>{transaction.nama}</td>
+                    <td>
+                      {moment(transaction.tanggal).format("dddd DD, MMMM Y")}
+                    </td>
+                    <td>{transaction.jumlah}</td>
+                    <td>{transaction.jenis}</td>
+                    <td>{transaction.status}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((transaction, index) => (
-                    <tr key={transaction.order_id}>
-                      <td>{index + 1}</td>
-                      <td>{transaction.order_id}</td>
-                      <td>{transaction.nama}</td>
-                      <td>
-                        {moment(transaction.tanggal).format("dddd DD, MMMM Y")}
-                      </td>
-                      <td>{transaction.jumlah}</td>
-                      <td>{transaction.jenis}</td>
-                      <td>{transaction.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {/* )} */}
         </section>
       </div>
     </div>
