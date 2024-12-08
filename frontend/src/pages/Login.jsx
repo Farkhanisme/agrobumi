@@ -13,6 +13,11 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
+    if (!username || !password) {
+      setError("Nama dan Password harus diisi!");
+      return;
+    }
+
     try {
       const respon = await axios.post("http://localhost:3000/login", {
         username,
@@ -21,56 +26,59 @@ const Login = () => {
       localStorage.setItem("token", respon.data.token);
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
-
-      if (error.response) {
-        setError(error.response.data.message || "Ada Kesalahan!");
-      } else {
-        setError("Login gagal :(");
-      }
+      setError(error.response?.data?.message || "Login gagal :(");
     }
   };
 
   return (
-    <div className="login-container mt-16 mb-28 mx-auto">
-      <div className="login-header">
-        <h1>Narmada Botanic Garden</h1>
-      </div>
-      <form onSubmit={handleSubmit} className="login-form">
-        <label htmlFor="email">Nama</label>
-        <input
-          className="w-full"
-          type="text"
-          id="email"
-          placeholder="Masukkan Nama"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Masukkan Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <div className="login-options">
-          <a href="/" className="forgot-password">
-            Lupa Password?
+    <div className="login-page">
+      {/* Kolom Kiri: Form Login */}
+      <div className="login-container">
+        <div className="login-header">
+          <h1>Narmada Botanic Garden</h1>
+        </div>
+        <form onSubmit={handleSubmit} className="login-form">
+          <label htmlFor="username">Nama</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Masukkan Nama"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Masukkan Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <a href="/forgot-password" className="forgot-password">
+            Lupa password?
           </a>
+          <button type="submit" className="login-button">
+            Login
+          </button>
+          <div className="register-link">
+            <p>
+              Belum punya akun? <a href="/register">Daftar</a>
+            </p>
+          </div>
+        </form>
+        {error && <span className="error-message">{error}</span>}
+      </div>
+
+    
+      <div className="image-container">
+        <div className="img">
+          <img className="image image1" src="/images/gambar1.png" alt="Image 1" />
+          <img className="image image2" src="/images/gambar2.png" alt="Image 2" />
+          <img className="image image3" src="/images/gambar3.png" alt="Image 3" />
         </div>
-        <button type="submit" className="login-button">
-          Login
-        </button>
-        <div className="register-link">
-          <p>
-            Belum punya akun? <a href="/register">Daftar</a>
-          </p>
-        </div>
-      </form>
-      <span>{error}</span>
+      </div>
     </div>
   );
 };
