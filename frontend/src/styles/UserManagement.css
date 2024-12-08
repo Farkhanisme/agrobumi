@@ -1,40 +1,38 @@
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .add-user-form {
-    margin-bottom: 20px;
-  }
-  
-  .add-user-form input {
-    margin: 0 5px;
-    padding: 8px;
-  }
-  
-  .add-user-form button {
-    padding: 8px 12px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .user-table th,
-  .user-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-  }
-  
-  .user-table th {
-    background-color: #4caf50;
-    color: white;
-  }
-  
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  padding: 20px;
+  text-align: center;
+}
+
+.add-user-form {
+  margin-bottom: 20px;
+}
+
+.add-user-form input {
+  margin: 0 5px;
+  padding: 8px;
+}
+
+.add-user-form button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.user-table {
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.user-table th {
+  background-color: #4caf50;
+  color: white;
+}

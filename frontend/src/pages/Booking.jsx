@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment/min/moment-with-locales";
 import { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -65,8 +65,17 @@ const Booking = () => {
 
       window.snap.pay(token, {
         onSuccess: function (result) {
-          toast.success("Pembayaran Sukses!");
           updateStatus(result.order_id);
+          toast.custom(
+            <div className="w-fit bg-white p-16 text-center rounded-md shadow-xl">
+              <p>
+                Pembayaran Berhasil! <br /> <br />
+                Terima kasih atas pesanan anda. <br /> Ticket anda kami kirim melalui
+                <br />
+                <span className="text-button-3">Email</span>
+              </p>
+            </div>
+          );
           sendEmail(result.order_id);
         },
         onPending: function (result) {
@@ -123,9 +132,9 @@ const Booking = () => {
         console.error("Error fetching excluded dates:", error);
       }
     };
-  
+
     fetchExcludedDates();
-  }, []);  
+  }, []);
 
   return (
     <>

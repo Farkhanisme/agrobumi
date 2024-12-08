@@ -13,8 +13,9 @@ import About from "./pages/About";
 import Us from "./pages/Us";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
-import Register from "./pages/Register"
-
+import Register from "./pages/Register";
+import UserManagement from "./pages/UserManagement";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -28,12 +29,12 @@ function App() {
 
 function Content() {
   const location = useLocation();
-  const isDashboard = location.pathname === "/dashboard";
+  const isDashboard = location.pathname === "/dashboard" || location.pathname === "/dashboard/user" || location.pathname === "/dashboard/setting";
 
   return (
     <div>
       {!isDashboard && <Navbar />}
-      
+
       <Routes>
         <Route path="/" element={<Beranda />} />
         <Route path="/event" element={<Event />} />
@@ -43,6 +44,8 @@ function Content() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Admin />} />
+        <Route path="/dashboard/user" element={<UserManagement />} />
+        <Route path="/dashboard/setting" element={<Settings />} />
       </Routes>
 
       {!isDashboard && <Footer />}
