@@ -3,16 +3,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/min/moment-with-locales";
 import Dashboard from "./Dashboard";
-import UserManagement from './UserManagement';
+import UserManagement from "./UserManagement";
 import Settings from "./Settings";
 import "../styles/Admin.css";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Admin = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [currentSection, setCurrentSection] = useState("dashboard");
 
   useEffect(() => {
@@ -30,22 +29,25 @@ const Admin = () => {
         setTransactions(response.data.transaction);
       } catch (error) {
         console.error("Error fetching transactions:", error);
-        setError("Failed to fetch transactions.");
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
+    
+    // fetchTransactions();
 
-    fetchTransactions();
+    toast.promise(fetchTransactions(), {
+      loading: "Loading",
+      success: "Got the data",
+      error: "Error when fetching",
+    });
+
   }, [token, navigate]);
-  
+
   const logout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("token");
       navigate("/");
     }
   };
-  
 
   const renderSection = () => {
     switch (currentSection) {
@@ -60,15 +62,9 @@ const Admin = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading transactions...</div>;
-  }
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <div className="admin-container">
+        <Toaster />
       {/* Sidebar */}
       <div className="sidebar">
         <h2>Admin Panel</h2>

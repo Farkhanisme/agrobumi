@@ -19,7 +19,6 @@ const Login = () => {
         password,
       });
       localStorage.setItem("token", respon.data.token);
-      console.log(respon.data.token);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);

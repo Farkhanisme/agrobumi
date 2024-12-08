@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment/min/moment-with-locales";
 import { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Booking = () => {
   const [name, setName] = useState("");
@@ -64,19 +65,18 @@ const Booking = () => {
 
       window.snap.pay(token, {
         onSuccess: function (result) {
+          toast.success("Pembayaran Sukses!");
           updateStatus(result.order_id);
           sendEmail(result.order_id);
         },
         onPending: function (result) {
-          console.log("Payment Pending:", result);
+          toast.error("Pembayaran Pending", result);
         },
         onError: function (result) {
-          console.log("Payment Failed:", result);
+          toast.error("Pembayaran Gagal", result);
         },
         onClose: function () {
-          console.log(
-            "Customer closed the popup without finishing the payment"
-          );
+          toast.error("Anda Menutup Tanpa Menyelesaikan Pembayaran");
         },
       });
     } catch (error) {
@@ -130,6 +130,7 @@ const Booking = () => {
   return (
     <>
       <div id="form" className="flex p-5 mb-14">
+        <Toaster />
         <div
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
