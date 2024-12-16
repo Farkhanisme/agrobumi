@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/Login.css";
 
 const Login = () => {
@@ -56,15 +56,12 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <a href="/forgot-password" className="forgot-password">
-            Lupa password?
-          </a>
           <button type="submit" className="login-button">
             Login
           </button>
           <div className="register-link">
             <p>
-              Belum punya akun? <a href="/register">Daftar</a>
+              Belum punya akun? <Link to="/register">Daftar</Link>
             </p>
           </div>
         </form>

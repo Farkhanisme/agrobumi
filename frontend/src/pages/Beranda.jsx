@@ -310,14 +310,6 @@ import "../styles/Beranda.css";
           </span>
           <img id="modalImage" className="modal-content" alt="Popup" />
         </div>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.0403029793238!2d116.2033429740816!3d-8.592123587229137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcdb86cd9a8363f%3A0xb0684580815801d3!2sNarmada%20Botanic%20Garden!5e0!3m2!1sid!2sid!4v1733707628982!5m2!1sid!2sid"
-          className="w-full"
-          height="450"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
       </div>
     );
   };

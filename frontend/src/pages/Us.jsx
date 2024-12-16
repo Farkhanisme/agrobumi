@@ -3,8 +3,8 @@ import "../styles/Us.css";
 
 function TeamAgrobumi() {
   return (
-    <div className="container">
-      <h1 className="font-poppins font-semibold text-2xl text-primary-3">Team Agrobumi Indonesia</h1>
+    <div className="my-10">
+      <h1 className="font-poppins font-semibold text-2xl text-primary-3 text-center my-8">Team Agrobumi Indonesia</h1>
       <div className="level">
         <div
           className="person"

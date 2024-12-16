@@ -6,10 +6,12 @@ import moment from "moment/min/moment-with-locales";
 import { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
 
 function Settings() {
   const [tanggalMulai, setTanggalMulai] = useState(null);
   const [tanggalSelesai, setTanggalSelesai] = useState(null);
+  const [description, setDescription] = useState("");
   const [holidays, setHolidays] = useState([]);
 
   const handleSubmit = async (e) => {
@@ -29,7 +31,7 @@ function Settings() {
       );
       console.log("Server response:", response);
       alert("Tanggal berhasil ditambahkan");
-      window.location.reload();  
+      window.location.reload();
     } catch (error) {
       console.error("Error adding excluded date:", error);
       alert("Gagal menambahkan tanggal");
@@ -62,79 +64,84 @@ function Settings() {
   };
 
   return (
-    <div className="container">
-      <header>
-        <h2>Settings</h2>
-      </header>
-      <main>
-        <form>
-          <label>
-            Tanggal Mulai:
-            <DatePicker
-              selected={tanggalMulai}
-              onChange={(date) => setTanggalMulai(date)}
-              dateFormat="dd MMMM, yyyy"
-              className="border rounded p-1"
-            />
-          </label>
-          <label>
-            Tanggal Akhir (Opsional):
-            <DatePicker
-              selected={tanggalSelesai}
-              onChange={(date) => setTanggalSelesai(date)}
-              dateFormat="dd MMMM, yyyy"
-              className="border rounded p-1"
-            />
-          </label>
-          {/* <label>
-            Deskripsi:
-            <input
-              type="text"
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              required
-            />
-          </label> */}
-          <button onClick={handleSubmit}>Tambah</button>
-        </form>
-        <table>
-          <thead>
-            <tr>
-              <th className="text-center">No</th>
-              <th className="text-center">Tanggal Mulai</th>
-              <th className="text-center">Tanggal Selesai</th>
-              <th className="text-center">Deskripsi</th>
-              <th className="text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {holidays.map((holiday, index) => (
-              <tr key={holiday.id}>
-                <td className="text-center">{index + 1}</td>
-                <td className="text-center">
-                  {moment(holiday.start).format("dddd DD MMMM, YYYY")}
-                </td>
-                <td className="text-center">
-                  {holiday.end
-                    ? moment(holiday.end).format("dddd DD MMMM, YYYY")
-                    : ""}
-                </td>
-                <td className="text-center">{holiday.description}</td>
-                <td className="space-x-5">
-                  <button
-                    className="bg-danger-1 text-white"
-                    onClick={hapusLibur(holiday.id)}
-                  >
-                    Hapus
-                  </button>
-                  <button className="bg-succes-1 text-white">Edit</button>
-                </td>
+    <div className="flex">
+      <Sidebar />
+      <div className="container">
+        <header>
+          <h2>Settings</h2>
+        </header>
+        <main>
+          <form>
+            <div className="flex space-x-5">
+              <label>
+                Tanggal Mulai:
+                <DatePicker
+                  selected={tanggalMulai}
+                  onChange={(date) => setTanggalMulai(date)}
+                  dateFormat="dd MMMM, yyyy"
+                  className="border rounded p-1"
+                />
+              </label>
+              <label>
+                Tanggal Akhir (Opsional):
+                <DatePicker
+                  selected={tanggalSelesai}
+                  onChange={(date) => setTanggalSelesai(date)}
+                  dateFormat="dd MMMM, yyyy"
+                  className="border rounded p-1"
+                />
+              </label>
+              <label>
+                Deskripsi (Opsional):
+                <input
+                  type="text"
+                  name="description"
+                  value={description}
+                  className="border rounded p-1"
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </label>
+            </div>
+            <button onClick={handleSubmit}>Tambah</button>
+          </form>
+          <table>
+            <thead>
+              <tr>
+                <th className="text-center">No</th>
+                <th className="text-center">Tanggal Mulai</th>
+                <th className="text-center">Tanggal Selesai</th>
+                <th className="text-center">Deskripsi</th>
+                <th className="text-center">Aksi</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
+            </thead>
+            <tbody>
+              {holidays.map((holiday, index) => (
+                <tr key={holiday.id}>
+                  <td className="text-center">{index + 1}</td>
+                  <td className="text-center">
+                    {moment(holiday.start).format("dddd DD MMMM, YYYY")}
+                  </td>
+                  <td className="text-center">
+                    {holiday.end
+                      ? moment(holiday.end).format("dddd DD MMMM, YYYY")
+                      : ""}
+                  </td>
+                  <td className="text-center">{holiday.description}</td>
+                  <td className="space-x-5">
+                    <button
+                      className="bg-danger-1 text-white"
+                      onClick={hapusLibur(holiday.id)}
+                    >
+                      Hapus
+                    </button>
+                    {/* <button className="bg-succes-1 text-white">Edit</button> */}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </main>
+      </div>
     </div>
   );
 }

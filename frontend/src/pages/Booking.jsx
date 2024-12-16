@@ -16,6 +16,10 @@ const Booking = () => {
   const [harga, setHarga] = useState(0);
   const [totalHarga, setTotalHarga] = useState(0);
   const [excludedDates, setExcludedDates] = useState([]);
+  const [paketParty, setPaketParty] = useState(false);
+  const [paketFoto, setPaketFoto] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [map, setMap] = useState(false);
 
   registerLocale("id", id);
   moment.locale("id");
@@ -27,16 +31,105 @@ const Booking = () => {
       .join(" ");
   };
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+
+    if (!validateEmail(inputEmail)) {
+      setEmailError("Format email tidak valid");
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleTiketChange = (e) => {
     const selectedTiket = e.target.value;
     setTiket(selectedTiket);
 
-    if (selectedTiket == "wisata") {
-      let price = 10000;
-      setHarga(price);
-      setTotalHarga(price * jumlah);
+    let price = 0;
+    switch (selectedTiket) {
+      case "cooking_class":
+        price = 450000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        setPaketParty(false);
+        setPaketFoto(false);
+        break;
+      case "education_class":
+        price = 350000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        setPaketParty(false);
+        setPaketFoto(false);
+        break;
+      case "garden_party":
+        setTotalHarga(0);
+        setPaketParty(true);
+        setPaketFoto(false);
+        break;
+      case "paket_1_party":
+        setPaketParty(true);
+        setPaketFoto(false);
+        price = 2000000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        break;
+      case "paket_2_party":
+        setPaketParty(true);
+        setPaketFoto(false);
+        price = 5000000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        break;
+      case "paket_3_party":
+        setPaketParty(true);
+        setPaketFoto(false);
+        price = 10000000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        break;
+      case "foto_korea_jepang":
+        setTotalHarga(0);
+        setPaketFoto(true);
+        setPaketParty(false);
+        break;
+      case "paket_1_foto":
+        setPaketFoto(true);
+        setPaketParty(false);
+        price = 50000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        break;
+      case "paket_2_foto":
+        setPaketFoto(true);
+        setPaketParty(false);
+        price = 10000;
+        setHarga(price);
+        setTotalHarga(price * jumlah);
+        break;
     }
   };
+
+  function formatRupiah(angka) {
+    let number_string = angka.toString().replace(/[^,\d]/g, ""),
+      split = number_string.split(","),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+      let separator = sisa ? "." : "";
+      rupiah += separator + ribuan.join(".");
+    }
+
+    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+    return "Rp. " + rupiah;
+  }
 
   const handleJumlahChange = (e) => {
     const newJumlah = parseInt(e.target.value);
@@ -45,6 +138,16 @@ const Booking = () => {
   };
 
   const handleSubmit = async () => {
+    if (!name || !email || !tanggal || !tiket || jumlah <= 0) {
+      toast.error("Harap lengkapi semua data sebelum melanjutkan!");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      toast.error("Format email tidak valid!");
+      return;
+    }
+
     try {
       const data = {
         name: name,
@@ -54,8 +157,10 @@ const Booking = () => {
         tiket: tiket,
         harga: harga,
         totalHarga: totalHarga,
+        created_at: moment().format("YYYY-MM-DD"),
       };
 
+      console.log(data);
       const response = await axios.post(
         "http://localhost:3000/api/snap-token",
         data
@@ -70,12 +175,14 @@ const Booking = () => {
             <div className="w-fit bg-white p-16 text-center rounded-md shadow-xl">
               <p>
                 Pembayaran Berhasil! <br /> <br />
-                Terima kasih atas pesanan anda. <br /> Ticket anda kami kirim melalui
+                Terima kasih atas pesanan anda. <br /> Ticket anda kami kirim
+                melalui
                 <br />
                 <span className="text-button-3">Email</span>
               </p>
             </div>
           );
+          setMap(true);
           sendEmail(result.order_id);
         },
         onPending: function (result) {
@@ -91,6 +198,10 @@ const Booking = () => {
     } catch (error) {
       console.error("Error fetching Snap token:", error);
     }
+  };
+
+  const closeMap = () => {
+    setMap(false);
   };
 
   const updateStatus = (orderId) => {
@@ -160,15 +271,20 @@ const Booking = () => {
               />
             </div>
 
-            <div className="flex space-x-2 items-center">
-              <img src="/logos/envelope.svg" className="h-6" />
-              <input
-                type="email"
-                className="w-full border-2 border-black rounded-md p-1 placeholder-gray-500 text-sm"
-                placeholder="Masukkan email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+            <div className="flex flex-col space-y-2">
+              <div className="flex space-x-2 items-center">
+                <img src="/logos/envelope.svg" className="h-6" />
+                <input
+                  type="email"
+                  className="w-full border-2 border-black rounded-md p-1 placeholder-gray-500 text-sm"
+                  placeholder="Masukkan email"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
+              {emailError && (
+                <p className="text-red-500 text-sm">{emailError}</p>
+              )}
             </div>
 
             <div className="flex space-x-2 items-center">
@@ -203,13 +319,57 @@ const Booking = () => {
                 name="tiket"
                 id="tiket"
                 className="w-full border-2 border-black rounded-md p-1 text-gray-500 text-sm focus:block"
-                value={tiket}
+                // value={tiket}
                 onChange={handleTiketChange}
               >
                 <option value="pilih tiket">Pilih Tiket</option>
-                <option value="wisata">Wisata</option>
+                <option value="cooking_class">Cooking Class</option>
+                <option value="education_class">Education Class</option>
+                <option value="garden_party">Garden Party</option>
+                <option value="foto_korea_jepang">
+                  Spot Foto Ala Korea Jepang
+                </option>
               </select>
             </div>
+
+            {paketParty && (
+              <div className="flex space-x-2 items-center">
+                <img src="/logos/ticket.svg" className="h-6" />
+                <select
+                  name="tiket"
+                  id="tiket"
+                  className="w-full border-2 border-black rounded-md p-1 text-gray-500 text-sm focus:block"
+                  value={tiket}
+                  onChange={handleTiketChange}
+                >
+                  <option value="pilih paket">Pilih Paket</option>
+                  <option value="paket_1_party">Paket 1 10-20 orang</option>
+                  <option value="paket_2_party">Paket 2 20-50 orang</option>
+                  <option value="paket_3_party">
+                    Paket 1 lebih dari 50 orang
+                  </option>
+                </select>
+              </div>
+            )}
+
+            {paketFoto && (
+              <div className="flex space-x-2 items-center">
+                <img src="/logos/ticket.svg" className="h-6" />
+                <select
+                  name="tiket"
+                  id="tiket"
+                  className="w-full border-2 border-black rounded-md p-1 text-gray-500 text-sm focus:block"
+                  value={tiket}
+                  onChange={handleTiketChange}
+                >
+                  <option value="pilih paket">Pilih Paket</option>
+                  <option value="paket_1_foto">
+                    Foto + Peminjaman Aksesoris
+                  </option>
+                  <option value="paket_2_foto">Foto</option>
+                </select>
+              </div>
+            )}
 
             <button
               className="bg-green-600 rounded-md p-1 w-24 text-white float-right"
@@ -219,6 +379,32 @@ const Booking = () => {
             </button>
           </div>
         </div>
+        {map && (
+          <div className="fixed z-10 w-full h-fit flex flex-col items-center justify-center">
+            <div className="flex w-full justify-center space-x-10">
+              <input
+                type="text"
+                value="https://maps.app.goo.gl/HiS7yYQ7cJWv5PVW7"
+                readOnly
+                className="w-1/3 rounded-md mb-2 text-center border border-black"
+              />
+              <span
+                className="font-medium text-gray-400 text-4xl cursor-pointer"
+                onClick={closeMap}
+              >
+                &times;
+              </span>
+            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.0402477079047!2d116.20591789999999!3d-8.592128899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcdb86cd9a8363f%3A0xb0684580815801d3!2sNarmada%20Botanic%20Garden!5e0!3m2!1sid!2sid!4v1734236861390!5m2!1sid!2sid"
+              width="600"
+              height="450"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        )}
         <div id="detail" className="p-14 text-center w-1/2 space-y-6">
           <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
           <input
@@ -250,10 +436,10 @@ const Booking = () => {
             readOnly
           />
           <input
-            type="number"
+            type="text"
             className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black"
             placeholder="Total Harga"
-            value={totalHarga}
+            value={formatRupiah(totalHarga)}
             readOnly
           />
         </div>

@@ -9,8 +9,33 @@ import { promisify } from "node:util";
 dotenv.config();
 
 export const getSnapToken = async (req, res) => {
-  const { name, email, tanggal, jumlah, tiket, harga, totalHarga } = req.body;
+  const { name, email, tanggal, jumlah, tiket, harga, totalHarga, created_at } = req.body;
   const orderId = uuidv4();
+
+  let nama_tiket;
+  switch (tiket) {
+    case "cooking_class":
+      nama_tiket = "Tiket Cooking Class";
+      break;
+    case "education_class":
+      nama_tiket = "Tiket Education Class";
+      break;
+    case "paket_1_party":
+      nama_tiket = "Reservasi Garden Party Paket 1";
+      break;
+    case "paket_2_party":
+      nama_tiket = "Reservasi Garden Party Paket 2";
+      break;
+    case "paket_3_party":
+      nama_tiket = "Reservasi Garden Party Paket 3";
+      break;
+    case "paket_1_foto":
+      nama_tiket = "Tiket Spot Foto Paket 1";
+      break;
+    case "paket_2_foto":
+      nama_tiket = "Tiket Spot Foto Paket 2";
+      break;
+  }
 
   const parameter = {
     transaction_details: {
@@ -21,15 +46,22 @@ export const getSnapToken = async (req, res) => {
       first_name: name,
       email: email,
     },
+    item_details: [
+      {
+        price: harga,
+        quantity: jumlah,
+        name: nama_tiket,
+      },
+    ],
   };
 
   const insert =
-    "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status, harga, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   try {
     db.query(
       insert,
-      [orderId, name, tanggal, jumlah, tiket, "pending"],
+      [orderId, name, tanggal, jumlah, nama_tiket, "pending", totalHarga, created_at],
       (err, result) => {
         if (err) {
           console.error(
@@ -160,7 +192,6 @@ export const updateTransaction = (req, res) => {
   });
 };
 
-
 export const getUser = async (req, res) => {
   const select = "SELECT * FROM users";
   try {
@@ -169,5 +200,20 @@ export const getUser = async (req, res) => {
   } catch (error) {
     console.error("data gagal diambil", error);
     return res.status(500).json({ error: "gagal mengambil data transaksi" });
+  }
+};
+
+export const getTransactionDetails = async (req, res) => {
+  const select = `SELECT 
+    (SELECT SUM(CASE WHEN status = 'success' THEN harga ELSE 0 END) FROM booking) AS income,
+    (SELECT COUNT(*) FROM users) AS user,
+    (SELECT COUNT(*) FROM booking WHERE DATE(created_at) = CURDATE()) AS new_order,
+    (SELECT COUNT(DISTINCT order_id) FROM booking) AS customers`;
+  try {
+    const [rows] = await db.query(select);
+    res.json({ rows });
+  } catch (error) {
+    console.error("Data gagal diambil", error);
+    return res.status(500).json({ error: "Gagal mengambil data transaksi" });
   }
 };

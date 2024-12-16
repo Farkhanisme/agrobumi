@@ -9,6 +9,25 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const validatePassword = (value) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+
+    if (!regex.test(value)) {
+      setError(
+        "Password harus memiliki 8-20 karakter, termasuk huruf besar, huruf kecil, angka, dan karakter khusus seperti @ $ ! % * ? &."
+      );
+    } else {
+      setError("");
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    validatePassword(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -26,7 +45,6 @@ const Register = () => {
 
   return (
     <div className="login-page">
-      
       <div className="login-container">
         <div className="login-header">
           <h1>Narmada Botanic Garden</h1>
@@ -47,7 +65,7 @@ const Register = () => {
             id="password"
             placeholder="Masukkan Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
             required
           />
           <button type="submit" className="login-button">
@@ -57,12 +75,23 @@ const Register = () => {
         {error && <span className="error-message">{error}</span>}
       </div>
 
-      
       <div className="image-container">
         <div className="img">
-          <img className="image image1" src="/images/gambar1.png" alt="Image 1" />
-          <img className="image image2" src="/images/gambar2.png" alt="Image 2" />
-          <img className="image image3" src="/images/gambar3.png" alt="Image 3" />
+          <img
+            className="image image1"
+            src="/images/gambar1.png"
+            alt="Image 1"
+          />
+          <img
+            className="image image2"
+            src="/images/gambar2.png"
+            alt="Image 2"
+          />
+          <img
+            className="image image3"
+            src="/images/gambar3.png"
+            alt="Image 3"
+          />
         </div>
       </div>
     </div>

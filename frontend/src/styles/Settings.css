@@ -1,6 +1,7 @@
 .container {
     padding: 20px;
     text-align: center;
+    width: calc(100% - 250px);
 }
 
 header h2 {
