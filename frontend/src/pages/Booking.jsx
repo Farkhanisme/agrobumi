@@ -255,7 +255,7 @@ const Booking = () => {
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
         >
-          <span className="text-green-600">
+          <span style={{ color: '#88C273' }}>
             <h1 className="text-2xl">BOOKING NOW</h1>
             <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
           </span>
@@ -406,7 +406,7 @@ const Booking = () => {
           </div>
         )}
         <div id="detail" className="p-14 text-center w-1/2 space-y-6">
-          <h1 className="text-green-600 mb-3 text-2xl">Detail Pemesanan</h1>
+          <h1 style={{ color: '#88C273' }} className="mb-3 text-2xl">Detail Pemesanan</h1>
           <input
             type="text"
             className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black capitalize"

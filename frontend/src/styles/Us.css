@@ -2,22 +2,24 @@
     text-align: center;
     }
     
-    .level {
+.level {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
-    }
-    .level {
-        display: flex;
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Centers vertically */
-        margin-bottom: 20px;
-    }
-    .person {
-        width: 150px; /* Increased width */
-        height: 150px; /* Increased height */
-        background-size: cover;
-        border-radius: 10%;
-        margin: 10px 20px; /* Adjusted margin for spacing */
-        background-color: #ccc;
-    }
+}
+
+.level {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+    
+.person {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    border-radius: 10%;
+    margin: 10px 20px; 
+    background-color: #ccc;
+}
