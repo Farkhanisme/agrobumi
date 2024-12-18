@@ -6,10 +6,68 @@ import toast, { Toaster } from "react-hot-toast";
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({ name: "", password: "", role: "" });
+  const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const validatePassword = (value) => {
+  //   const regex =
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+
+  //   if (!regex.test(value)) {
+  //     setError(
+  //       "Password harus memiliki 8-20 karakter, termasuk huruf besar, huruf kecil, angka, dan karakter khusus seperti @ $ ! % * ? &."
+  //     );
+  //   } else {
+  //     setError("");
+  //   }
+  // };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    // validatePassword(value);
+  };
 
   // Fetch users from API
   useEffect(() => {
+    const { search } = window.location;
+    const notificationParams = new URLSearchParams(search).get(
+      "notificationParams"
+    );
+
+    if (notificationParams === "1") {
+      toast.success("Users berhasil ditambahkan");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "2") {
+      toast.error("Users gagal ditambahkan");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "3") {
+      toast.success("Users berhasil dihapus");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "4") {
+      toast.error("Users gagal dihapus");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "5") {
+      toast.success("Users berhasil diverifikasi");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "6") {
+      toast.error("Users gagal diverifikasi");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    }
+
     const fetchUsers = async () => {
       try {
         const response = await axios.get("http://localhost:3000/api/get-user");
@@ -29,30 +87,38 @@ function UserManagement() {
   }, []);
 
   // Add a new user
-  const handleAddUser = async () => {
+  const handleAddUser = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
+      const response = await axios.post("http://localhost:3000/sign-up", {
+        username,
+        password,
+        role,
       });
-      const data = await response.json();
-      setUsers([...users, data]);
-      setNewUser({ name: "", email: "", role: "" });
+      window.location.href = window.location.pathname + "?notificationParams=1";
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.log(error);
+      window.location.href = window.location.pathname + "?notificationParams=2";
+
     }
   };
 
   // Delete a user
   const handleDeleteUser = async (id) => {
     try {
-      await fetch(`http://localhost:3000/delete-users/${id}`, {
-        method: "DELETE",
-      });
-      setUsers(users.filter((user) => user.id !== id));
+      const response = axios.post(`http://localhost:3000/delete-users/${id}`);
+      window.location.href = window.location.pathname + "?notificationParams=3";
     } catch (error) {
-      console.error("Error deleting user:", error);
+      window.location.href = window.location.pathname + "?notificationParams=4";
+    }
+  };
+
+  const handleUpdateUser = async (id) => {
+    try {
+      const response = axios.post(`http://localhost:3000/update-users/${id}`);
+      window.location.href = window.location.pathname + "?notificationParams=5";
+    } catch (error) {
+      window.location.href = window.location.pathname + "?notificationParams=6";
     }
   };
 
@@ -71,22 +137,20 @@ function UserManagement() {
             <input
               type="text"
               placeholder="Name"
-              value={newUser.name}
-              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+              value={username.name}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <input
               type="email"
               placeholder="Password"
-              value={newUser.password}
-              onChange={(e) =>
-                setNewUser({ ...newUser, password: e.target.value })
-              }
+              value={password}
+              onChange={handleChange}
             />
             <input
               type="text"
               placeholder="Role"
-              value={newUser.role}
-              onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
             />
             <button onClick={handleAddUser}>Add User</button>
           </div>
@@ -106,12 +170,18 @@ function UserManagement() {
                     <td className="text-center">{index + 1}</td>
                     <td>{user.username}</td>
                     <td>{user.role}</td>
-                    <td className="text-center">
+                    <td className="text-center space-x-5">
                       <button
                         className="bg-danger-1 text-white"
-                        onClick={handleAddUser(user.id)}
+                        onClick={() => handleDeleteUser(user.id)}
                       >
                         Hapus
+                      </button>
+                      <button
+                        className="bg-succes-1 text-white"
+                        onClick={() => handleUpdateUser(user.id)}
+                      >
+                        Verifikasi
                       </button>
                     </td>
                   </tr>

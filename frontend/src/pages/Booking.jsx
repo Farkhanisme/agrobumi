@@ -139,8 +139,13 @@ const Booking = () => {
 
   const handleSubmit = async () => {
     if (!name || !email || !tanggal || !tiket || jumlah <= 0) {
-      toast.error("Harap lengkapi semua data sebelum melanjutkan!");
+      toast.error("Harap lengkapi semua data sebelum melanjutkan!", {
+        icon: "",
+        className: "text-center",
+      });
       return;
+    } else {
+      toast.success("Tolong tunggu sebentar...");
     }
 
     if (!validateEmail(email)) {
@@ -160,7 +165,6 @@ const Booking = () => {
         created_at: moment().format("YYYY-MM-DD"),
       };
 
-      console.log(data);
       const response = await axios.post(
         "http://localhost:3000/api/snap-token",
         data
@@ -171,17 +175,6 @@ const Booking = () => {
       window.snap.pay(token, {
         onSuccess: function (result) {
           updateStatus(result.order_id);
-          toast.custom(
-            <div className="w-fit bg-white p-16 text-center rounded-md shadow-xl">
-              <p>
-                Pembayaran Berhasil! <br /> <br />
-                Terima kasih atas pesanan anda. <br /> Ticket anda kami kirim
-                melalui
-                <br />
-                <span className="text-button-3">Email</span>
-              </p>
-            </div>
-          );
           setMap(true);
           sendEmail(result.order_id);
         },
@@ -209,15 +202,37 @@ const Booking = () => {
   };
 
   const sendEmail = (orderId) => {
-    const mail = {
-      email: email,
-      nama: name,
-      jumlah: jumlah,
-      tanggal: moment(tanggal).format("dddd DD MMMM, YYYY"),
-      tiket: tiket,
-      ticketCode: orderId,
-    };
-    axios.post("http://localhost:3000/api/send-notification", mail);
+    try {
+      const mail = {
+        email: email,
+        nama: name,
+        jumlah: jumlah,
+        tanggal: moment(tanggal).format("dddd DD MMMM, YYYY"),
+        tiket: tiket,
+        ticketCode: orderId,
+      };
+      const response = axios.post(
+        "http://localhost:3000/api/send-notification",
+        mail
+      );
+
+      toast.custom(
+        <div className="w-fit bg-white p-4 text-center rounded-md shadow-xl">
+          <p>
+            Pembayaran Berhasil! <br /> <br />
+            Terima kasih atas pesanan Anda. <br /> Tiket Anda telah dikirim
+            melalui
+            <br />
+            <span className="text-button-3">Email</span>.
+          </p>
+        </div>
+      );
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error(
+        "Email gagal dikirim. Silakan hubungi kami di narmadabotanicgarden@mail.com."
+      );
+    }
   };
 
   useEffect(() => {
@@ -244,7 +259,9 @@ const Booking = () => {
       }
     };
 
-    fetchExcludedDates();
+    setInterval(() => {
+      fetchExcludedDates();
+    }, 1000);
   }, []);
 
   return (
@@ -277,7 +294,7 @@ const Booking = () => {
                 <input
                   type="email"
                   className="w-full border-2 border-black rounded-md p-1 placeholder-gray-500 text-sm"
-                  placeholder="Masukkan email"
+                  placeholder="Masukkan email (digunakan untuk mengirim kode tiket atau reservasi)"
                   value={email}
                   onChange={handleEmailChange}
                 />
@@ -399,9 +416,8 @@ const Booking = () => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.0402477079047!2d116.20591789999999!3d-8.592128899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dcdb86cd9a8363f%3A0xb0684580815801d3!2sNarmada%20Botanic%20Garden!5e0!3m2!1sid!2sid!4v1734236861390!5m2!1sid!2sid"
               width="600"
               height="450"
-              allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         )}

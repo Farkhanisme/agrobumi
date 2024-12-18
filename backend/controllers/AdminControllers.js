@@ -43,6 +43,7 @@ export const login = async (req, res) => {
       token,
       userId: user.id,
       username: user.username,
+      role: user.role,
     });
   } catch (error) {
     console.error(error);
@@ -51,7 +52,7 @@ export const login = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
 
   if (!username || !password) {
     return res
@@ -71,8 +72,8 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const insertQuery = "INSERT INTO users (username, password) VALUES (?, ?)";
-    const results = await query(insertQuery, [username, hashedPassword]);
+    const insertQuery = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    const results = await query(insertQuery, [username, hashedPassword, role || " "]);
 
     const token = jwt.sign(
       { userId: results.insertId, username },
@@ -91,8 +92,65 @@ export const signup = async (req, res) => {
   }
 };
 
+export const updateUser = (req, res) => {
+  const { id } = req.params;
+
+  const queryUpdate = "UPDATE users SET role = ? WHERE id = ?";
+  db.query(queryUpdate, ["admin", id], (err, results) => {
+    if (err) {
+      console.error("Error updating users role:", err);
+      return res
+        .status(500)
+        .json({ error: "Failed to update users role" });
+    }
+
+    if (results.affectedRows === 0) {
+      console.log(`No user found for id: ${id}`);
+      return res
+        .status(404)
+        .json({ error: "user not found in database" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "user status updated successfully" });
+  });
+};
+
+export const deleteUser = (req, res) => {
+  const { id } = req.params;
+
+  const hapus = "DELETE FROM users WHERE id = ?";
+  db.query(hapus, id, (err, result) => {
+    if (err) {
+      console.error("data gagal diupdate", err);
+      return res.status(500).json({ error: "transaksi gagal dihapus" });
+    }
+
+    if (result.affectedRows === 0) {
+      console.log("tidak ada data yang memiliki id tersebut");
+      return res.status(404).json({ error: "data tidak ditemukan" });
+    }
+    res.status(200).json({ message: "data berhasil dihapus" });
+  });
+};
+
 export const tambahLibur = async (req, res) => {
   const { tanggal_mulai, tanggal_selesai } = req.body;
+
+  if (!tanggal_mulai) {
+    return res.status(400).json({ message: "Tanggal mulai harus diisi" });
+  }
+
+  if (
+    tanggal_selesai &&
+    moment(tanggal_selesai).isBefore(moment(tanggal_mulai))
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Tanggal selesai harus lebih besar dari tanggal mulai" });
+  }
+
   try {
     await query(
       "INSERT INTO libur (tanggal_mulai, tanggal_selesai) VALUES (?, ?)",

@@ -24,6 +24,7 @@ const Login = () => {
         password,
       });
       localStorage.setItem("token", respon.data.token);
+      localStorage.setItem("role", respon.data.role);
       navigate("/dashboard");
     } catch (error) {
       setError(error.response?.data?.message || "Login gagal :(");

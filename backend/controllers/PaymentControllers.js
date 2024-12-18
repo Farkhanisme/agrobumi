@@ -9,7 +9,8 @@ import { promisify } from "node:util";
 dotenv.config();
 
 export const getSnapToken = async (req, res) => {
-  const { name, email, tanggal, jumlah, tiket, harga, totalHarga, created_at } = req.body;
+  const { name, email, tanggal, jumlah, tiket, harga, totalHarga, created_at } =
+    req.body;
   const orderId = uuidv4();
 
   let nama_tiket;
@@ -56,12 +57,22 @@ export const getSnapToken = async (req, res) => {
   };
 
   const insert =
-    "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status, harga, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO booking (order_id, nama, tanggal, jumlah, jenis, status, harga, email, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   try {
     db.query(
       insert,
-      [orderId, name, tanggal, jumlah, nama_tiket, "pending", totalHarga, created_at],
+      [
+        orderId,
+        name,
+        tanggal,
+        jumlah,
+        nama_tiket,
+        "pending",
+        totalHarga,
+        email,
+        created_at,
+      ],
       (err, result) => {
         if (err) {
           console.error(
@@ -107,60 +118,76 @@ export const getSnapToken = async (req, res) => {
 export const emailNotif = async (req, res) => {
   const { email, nama, jumlah, tanggal, tiket, ticketCode } = req.body;
 
-  const readFileAsync = promisify(fs.readFile);
-  const imageAttachment = await readFileAsync("email/brand.png");
-  const htmlTemplate = await readFileAsync("email/email.html", "utf-8");
+  let nama_tiket;
+  switch (tiket) {
+    case "cooking_class":
+      nama_tiket = "Tiket Cooking Class";
+      break;
+    case "education_class":
+      nama_tiket = "Tiket Education Class";
+      break;
+    case "paket_1_party":
+      nama_tiket = "Reservasi Garden Party Paket 1";
+      break;
+    case "paket_2_party":
+      nama_tiket = "Reservasi Garden Party Paket 2";
+      break;
+    case "paket_3_party":
+      nama_tiket = "Reservasi Garden Party Paket 3";
+      break;
+    case "paket_1_foto":
+      nama_tiket = "Tiket Spot Foto Paket 1";
+      break;
+    case "paket_2_foto":
+      nama_tiket = "Tiket Spot Foto Paket 2";
+      break;
+  }
 
-  const personalizedHtml = htmlTemplate
-    .replace("{{ nama }}", nama)
-    .replace("{{ jumlah }}", jumlah)
-    .replace("{{ tanggal }}", tanggal)
-    .replace("{{ tiket }}", tiket)
-    .replace("{{ ticketCode }}", ticketCode);
+  try {
+    const readFileAsync = promisify(fs.readFile);
+    const imageAttachment = await readFileAsync("email/brand.png");
+    const htmlTemplate = await readFileAsync("email/email.html", "utf-8");
 
-  //   const transport = nodemailer.createTransport({
-  //     host: "sandbox.smtp.mailtrap.io",
-  //     port: 2525,
-  //     auth: {
-  //       user: "996f553054b946",
-  //       pass: "c108a12b3d31f6",
-  //     },
-  //   });
+    const personalizedHtml = htmlTemplate
+      .replace("{{ nama }}", nama)
+      .replace("{{ jumlah }}", jumlah)
+      .replace("{{ tanggal }}", tanggal)
+      .replace("{{ tiket }}", nama_tiket)
+      .replace("{{ ticketCode }}", ticketCode);
 
-  let transport = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      type: "OAuth2",
-      user: process.env.MAIL_USERNAME,
-      pass: process.env.MAIL_PASSWORD,
-      clientId: process.env.MAIL_CLIENT_ID,
-      clientSecret: process.env.MAIL_CLIENT_SECRET,
-      refreshToken: process.env.MAIL_REFRESH_TOKEN,
-    },
-  });
-
-  const mailOptions = {
-    from: "narmadabotanicgarden@gmail.com",
-    to: email,
-    subject: "Narmada Ticket Code",
-    html: personalizedHtml,
-    attachments: [
-      {
-        filename: "brand.png",
-        content: imageAttachment,
-        encoding: "base64",
-        cid: "brand",
+    let transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+        clientId: process.env.MAIL_CLIENT_ID,
+        clientSecret: process.env.MAIL_CLIENT_SECRET,
+        refreshToken: process.env.MAIL_REFRESH_TOKEN,
       },
-    ],
-  };
+    });
 
-  transport.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log("Error:", error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
+    const mailOptions = {
+      from: "narmadabotanicgarden@gmail.com",
+      to: email,
+      subject: "Narmada Ticket Code",
+      html: personalizedHtml,
+      attachments: [
+        {
+          filename: "brand.png",
+          content: imageAttachment,
+          encoding: "base64",
+          cid: "brand",
+        },
+      ],
+    };
+
+    const info = transport.sendMail(mailOptions);
+    return res.json({ message: "Email sent successfully", response: info.response });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return res.status(500).json({ error: "Failed to send email", details: error.message });
+  }
 };
 
 export const getTransaction = async (req, res) => {

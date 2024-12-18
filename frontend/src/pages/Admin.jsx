@@ -10,10 +10,15 @@ import toast, { Toaster } from "react-hot-toast";
 const Admin = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     if (!token) {
+      navigate("/login");
+      return;
+    }
+    if (role == "") {
       navigate("/login");
       return;
     }
@@ -34,8 +39,8 @@ const Admin = () => {
 
     toast.promise(fetchTransactions(), {
       loading: "Loading",
-      success: "Got the data",
-      error: "Error when fetching",
+      success: "Data berhasil diambil",
+      error: "Data gagal diambil",
     });
   }, [token, navigate]);
 
@@ -56,7 +61,6 @@ const Admin = () => {
         <section className="data-table">
           <Dashboard />
           <div className="my-10">
-            <h2>Transaction Table</h2>
             <table>
               <thead>
                 <tr>
@@ -67,6 +71,7 @@ const Admin = () => {
                   <th>Jumlah</th>
                   <th>Tiket</th>
                   <th>Status</th>
+                  <th>Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -81,6 +86,7 @@ const Admin = () => {
                     <td>{transaction.jumlah}</td>
                     <td>{transaction.jenis}</td>
                     <td>{transaction.status}</td>
+                    <td>{transaction.email}</td>
                   </tr>
                 ))}
               </tbody>

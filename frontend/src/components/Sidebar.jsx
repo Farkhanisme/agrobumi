@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
+  // const [role, setRole] = useState(null);
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  console.log(role);
+  
   const logout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("token");
@@ -16,19 +20,11 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/dashboard">
-              Dashboard
-            </Link>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
+          <li>{role === 'super admin' && <Link to="/dashboard/user">User Management</Link>}</li>
           <li>
-            <Link to="/dashboard/user">
-              User Management
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/setting">
-              Settings
-            </Link>
+            <Link to="/dashboard/setting">Settings</Link>
           </li>
           <li>
             <button onClick={logout}>Logout</button>

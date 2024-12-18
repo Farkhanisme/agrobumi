@@ -7,12 +7,42 @@ import { registerLocale } from "react-datepicker";
 import id from "date-fns/locale/id";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import toast, { Toaster } from "react-hot-toast";
 
 function Settings() {
   const [tanggalMulai, setTanggalMulai] = useState(null);
   const [tanggalSelesai, setTanggalSelesai] = useState(null);
   const [description, setDescription] = useState("");
   const [holidays, setHolidays] = useState([]);
+
+  useEffect(() => {
+    const { search } = window.location;
+    const notificationParams = new URLSearchParams(search).get(
+      "notificationParams"
+    );
+
+    if (notificationParams === "1") {
+      toast.success("Libur berhasil ditambahkan");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "2") {
+      toast.success("Libur berhasil dihapus");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "3") {
+      toast.error("Libur gagal ditambahkan");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    } else if (notificationParams === "4") {
+      toast.error("Libur gagal dihapus");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("notificationParams");
+      window.history.replaceState(null, "", url.toString());
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,12 +59,10 @@ function Settings() {
         "http://localhost:3000/tambah-libur",
         data
       );
-      console.log("Server response:", response);
-      alert("Tanggal berhasil ditambahkan");
-      window.location.reload();
+      window.location.href = window.location.pathname + "?notificationParams=1";
     } catch (error) {
       console.error("Error adding excluded date:", error);
-      alert("Gagal menambahkan tanggal");
+      window.location.href = window.location.pathname + "?notificationParams=3";
     }
   };
 
@@ -51,22 +79,20 @@ function Settings() {
     fetchExcludedDates();
   }, []);
 
-  const hapusLibur = (id) => {
-    axios
-      .post(`http://localhost:3000/hapus-libur/${id}`)
-      .then((response) => {
-        alert("Transaction status updated successfully");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error updating transaction status:", error);
-      });
+  const hapusLibur = async (id) => {
+    try {
+      const response = axios.post(`http://localhost:3000/hapus-libur/${id}`);
+      window.location.href = window.location.pathname + "?notificationParams=2";
+    } catch (error) {
+      window.location.href = window.location.pathname + "?notificationParams=4";
+    }
   };
 
   return (
     <div className="flex">
       <Sidebar />
       <div className="container">
+        <Toaster />
         <header>
           <h2>Settings</h2>
         </header>
@@ -91,16 +117,6 @@ function Settings() {
                   className="border rounded p-1"
                 />
               </label>
-              <label>
-                Deskripsi (Opsional):
-                <input
-                  type="text"
-                  name="description"
-                  value={description}
-                  className="border rounded p-1"
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </label>
             </div>
             <button onClick={handleSubmit}>Tambah</button>
           </form>
@@ -110,7 +126,6 @@ function Settings() {
                 <th className="text-center">No</th>
                 <th className="text-center">Tanggal Mulai</th>
                 <th className="text-center">Tanggal Selesai</th>
-                <th className="text-center">Deskripsi</th>
                 <th className="text-center">Aksi</th>
               </tr>
             </thead>
@@ -126,11 +141,10 @@ function Settings() {
                       ? moment(holiday.end).format("dddd DD MMMM, YYYY")
                       : ""}
                   </td>
-                  <td className="text-center">{holiday.description}</td>
                   <td className="space-x-5">
                     <button
                       className="bg-danger-1 text-white"
-                      onClick={hapusLibur(holiday.id)}
+                      onClick={() => hapusLibur(holiday.id)}
                     >
                       Hapus
                     </button>
