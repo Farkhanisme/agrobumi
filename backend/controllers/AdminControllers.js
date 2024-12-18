@@ -144,7 +144,7 @@ export const tambahLibur = async (req, res) => {
 
   if (
     tanggal_selesai &&
-    moment(tanggal_selesai).isBefore(moment(tanggal_mulai))
+    tanggal_selesai.isBefore(tanggal_mulai)
   ) {
     return res
       .status(400)
