@@ -142,10 +142,7 @@ export const tambahLibur = async (req, res) => {
     return res.status(400).json({ message: "Tanggal mulai harus diisi" });
   }
 
-  if (
-    tanggal_selesai &&
-    tanggal_selesai.isBefore(tanggal_mulai)
-  ) {
+  if (!tanggal_selesai) {
     return res
       .status(400)
       .json({ message: "Tanggal selesai harus lebih besar dari tanggal mulai" });
