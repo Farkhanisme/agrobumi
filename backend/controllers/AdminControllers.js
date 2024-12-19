@@ -142,12 +142,6 @@ export const tambahLibur = async (req, res) => {
     return res.status(400).json({ message: "Tanggal mulai harus diisi" });
   }
 
-  if (!tanggal_selesai) {
-    return res
-      .status(400)
-      .json({ message: "Tanggal selesai harus lebih besar dari tanggal mulai" });
-  }
-
   try {
     await query(
       "INSERT INTO libur (tanggal_mulai, tanggal_selesai) VALUES (?, ?)",
