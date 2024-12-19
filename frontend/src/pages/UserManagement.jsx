@@ -10,23 +10,9 @@ function UserManagement() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const validatePassword = (value) => {
-  //   const regex =
-  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-
-  //   if (!regex.test(value)) {
-  //     setError(
-  //       "Password harus memiliki 8-20 karakter, termasuk huruf besar, huruf kecil, angka, dan karakter khusus seperti @ $ ! % * ? &."
-  //     );
-  //   } else {
-  //     setError("");
-  //   }
-  // };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    // validatePassword(value);
   };
 
   // Fetch users from API
@@ -70,7 +56,7 @@ function UserManagement() {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/get-user");
+        const response = await axios.get(`${import.meta.env.VITE_APP_API}/api/get-user`);
         setUsers(response.data.users);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -90,7 +76,7 @@ function UserManagement() {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/sign-up", {
+      const response = await axios.post(`${import.meta.env.VITE_APP_API}/sign-up`, {
         username,
         password,
         role,
@@ -106,7 +92,7 @@ function UserManagement() {
   // Delete a user
   const handleDeleteUser = async (id) => {
     try {
-      const response = axios.post(`http://localhost:3000/delete-users/${id}`);
+      const response = axios.post(`${import.meta.env.VITE_APP_API}/delete-users/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=3";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=4";
@@ -115,7 +101,7 @@ function UserManagement() {
 
   const handleUpdateUser = async (id) => {
     try {
-      const response = axios.post(`http://localhost:3000/update-users/${id}`);
+      const response = axios.post(`${import.meta.env.VITE_APP_API}/update-users/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=5";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=6";

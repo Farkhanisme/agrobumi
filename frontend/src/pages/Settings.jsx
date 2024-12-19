@@ -12,7 +12,6 @@ import toast, { Toaster } from "react-hot-toast";
 function Settings() {
   const [tanggalMulai, setTanggalMulai] = useState(null);
   const [tanggalSelesai, setTanggalSelesai] = useState(null);
-  const [description, setDescription] = useState("");
   const [holidays, setHolidays] = useState([]);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function Settings() {
           : null,
       };
       const response = await axios.post(
-        "http://localhost:3000/tambah-libur",
+        `${import.meta.env.VITE_APP_API}/tambah-libur`,
         data
       );
       window.location.href = window.location.pathname + "?notificationParams=1";
@@ -69,7 +68,7 @@ function Settings() {
   useEffect(() => {
     const fetchExcludedDates = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/ambil-libur");
+        const response = await axios.get(`${import.meta.env.VITE_APP_API}/ambil-libur`);
         setHolidays(response.data.exclude);
       } catch (error) {
         console.error("Error fetching excluded dates:", error);
@@ -81,7 +80,7 @@ function Settings() {
 
   const hapusLibur = async (id) => {
     try {
-      const response = axios.post(`http://localhost:3000/hapus-libur/${id}`);
+      const response = axios.post(`${import.meta.env.VITE_APP_API}/hapus-libur/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=2";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=4";

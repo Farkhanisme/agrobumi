@@ -32,7 +32,7 @@ const Register = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post("http://localhost:3000/sign-up", {
+      const response = await axios.post(`${import.meta.env.VITE_APP_API}/sign-up`, {
         username,
         password,
       });

@@ -166,7 +166,7 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:3000/api/snap-token",
+        `${import.meta.env.VITE_APP_API}/api/snap-token`,
         data
       );
 
@@ -198,7 +198,7 @@ const Booking = () => {
   };
 
   const updateStatus = (orderId) => {
-    axios.post(`http://localhost:3000/api/update-transaction/${orderId}`);
+    axios.post(`${import.meta.env.VITE_APP_API}/api/update-transaction/${orderId}`);
   };
 
   const sendEmail = (orderId) => {
@@ -212,7 +212,7 @@ const Booking = () => {
         ticketCode: orderId,
       };
       const response = axios.post(
-        "http://localhost:3000/api/send-notification",
+        `${import.meta.env.VITE_APP_API}/api/send-notification`,
         mail
       );
 
@@ -238,7 +238,7 @@ const Booking = () => {
   useEffect(() => {
     const fetchExcludedDates = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/ambil-libur");
+        const response = await axios.get(`${import.meta.env.VITE_APP_API}/ambil-libur`);
         const dates = response.data.exclude.flatMap((date) => {
           if (date.end) {
             const range = [];
@@ -272,7 +272,7 @@ const Booking = () => {
           id="form-pesan"
           className="flex-col w-1/2 border-r-2 border-black p-14 space-y-5"
         >
-          <span style={{ color: '#88C273' }}>
+          <span style={{ color: "#88C273" }}>
             <h1 className="text-2xl">BOOKING NOW</h1>
             <h3>Lengkapi Data Anda untuk Melanjutkan Pemesanan</h3>
           </span>
@@ -422,7 +422,9 @@ const Booking = () => {
           </div>
         )}
         <div id="detail" className="p-14 text-center w-1/2 space-y-6">
-          <h1 style={{ color: '#88C273' }} className="mb-3 text-2xl">Detail Pemesanan</h1>
+          <h1 style={{ color: "#88C273" }} className="mb-3 text-2xl">
+            Detail Pemesanan
+          </h1>
           <input
             type="text"
             className="w-full border-0 border-b-2 focus:outline-none border-black p-1 text-sm placeholder-black capitalize"

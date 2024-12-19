@@ -7,11 +7,10 @@ const Dashboard = () => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/get-transaction-details"
+          `${import.meta.env.VITE_APP_API}/api/get-transaction-details`
         );
 
         setDetails(response.data.rows[0]);
-        console.log(response.data.rows);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }

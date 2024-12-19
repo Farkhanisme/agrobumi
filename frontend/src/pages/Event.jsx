@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Event.css";
-import { use } from "react";
 
 const App = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

@@ -26,7 +26,7 @@ const Admin = () => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/get-transaction"
+          `${import.meta.env.VITE_APP_API}/api/get-transaction`
         );
 
         setTransactions(response.data.transaction);
