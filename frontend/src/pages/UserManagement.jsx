@@ -56,7 +56,7 @@ function UserManagement() {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(`https:\\agrobumi-production.up.railway.app/api/get-user`);
+        const response = await axios.get(`https://agrobumi-production.up.railway.app/api/get-user`);
         setUsers(response.data.users);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -76,7 +76,7 @@ function UserManagement() {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`https:\\agrobumi-production.up.railway.app/sign-up`, {
+      const response = await axios.post(`https://agrobumi-production.up.railway.app/sign-up`, {
         username,
         password,
         role,
@@ -92,7 +92,7 @@ function UserManagement() {
   // Delete a user
   const handleDeleteUser = async (id) => {
     try {
-      const response = axios.post(`https:\\agrobumi-production.up.railway.app/delete-users/${id}`);
+      const response = axios.post(`https://agrobumi-production.up.railway.app/delete-users/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=3";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=4";
@@ -101,7 +101,7 @@ function UserManagement() {
 
   const handleUpdateUser = async (id) => {
     try {
-      const response = axios.post(`https:\\agrobumi-production.up.railway.app/update-users/${id}`);
+      const response = axios.post(`https://agrobumi-production.up.railway.app/update-users/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=5";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=6";

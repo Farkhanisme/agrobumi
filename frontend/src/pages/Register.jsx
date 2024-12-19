@@ -32,7 +32,7 @@ const Register = () => {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post(`https:\\agrobumi-production.up.railway.app/sign-up`, {
+      const response = await axios.post(`https://agrobumi-production.up.railway.app/sign-up`, {
         username,
         password,
       });

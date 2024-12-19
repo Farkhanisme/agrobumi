@@ -26,7 +26,7 @@ const Admin = () => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          `https:\\agrobumi-production.up.railway.app/api/get-transaction`
+          `https://agrobumi-production.up.railway.app/api/get-transaction`
         );
 
         setTransactions(response.data.transaction);

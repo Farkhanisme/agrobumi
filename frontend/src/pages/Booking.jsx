@@ -166,7 +166,7 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        `https:\\agrobumi-production.up.railway.app/api/snap-token`,
+        `https://agrobumi-production.up.railway.app/api/snap-token`,
         data
       );
 
@@ -199,7 +199,7 @@ const Booking = () => {
 
   const updateStatus = (orderId) => {
     axios.post(
-      `https:\\agrobumi-production.up.railway.app/api/update-transaction/${orderId}`
+      `https://agrobumi-production.up.railway.app/api/update-transaction/${orderId}`
     );
   };
 
@@ -214,7 +214,7 @@ const Booking = () => {
         ticketCode: orderId,
       };
       const response = axios.post(
-        `https:\\agrobumi-production.up.railway.app/api/send-notification`,
+        `https://agrobumi-production.up.railway.app/api/send-notification`,
         mail
       );
 
@@ -241,7 +241,7 @@ const Booking = () => {
     const fetchExcludedDates = async () => {
       try {
         const response = await axios.get(
-          `https:\\agrobumi-production.up.railway.app/ambil-libur`
+          `https://agrobumi-production.up.railway.app/ambil-libur`
         );
         const dates = response.data.exclude.flatMap((date) => {
           if (date.end) {

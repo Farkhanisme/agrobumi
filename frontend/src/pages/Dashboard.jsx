@@ -7,7 +7,7 @@ const Dashboard = () => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          `https:\\agrobumi-production.up.railway.app/api/get-transaction-details`
+          `https://agrobumi-production.up.railway.app/api/get-transaction-details`
         );
 
         setDetails(response.data.rows[0]);
