@@ -7,7 +7,7 @@ import AdminRoutes from "./routes/AdminRoutes.js";
 const app = express();
 
 const cors = require('cors');
-app.use(cors({ origin: 'https://agrobumi.vercel.app' }));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
