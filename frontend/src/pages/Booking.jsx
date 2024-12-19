@@ -255,7 +255,7 @@ const Booking = () => {
         });
         setExcludedDates(dates);
       } catch (error) {
-        console.error("Error fetching excluded dates:", error);
+        //console.error("Error fetching excluded dates:", error);
       }
     };
 
