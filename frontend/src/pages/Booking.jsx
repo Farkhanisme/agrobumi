@@ -258,7 +258,10 @@ const Booking = () => {
           }
         });
         setExcludedDates(dates);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+        
+      }
     };
 
     setInterval(() => {
