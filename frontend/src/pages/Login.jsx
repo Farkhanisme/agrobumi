@@ -19,7 +19,7 @@ const Login = () => {
     }
 
     try {
-      const respon = await axios.post(`${import.meta.env.VITE_APP_API}/login`, {
+      const respon = await axios.post(`https:\\agrobumi-production.up.railway.app/login`, {
         username,
         password,
       });

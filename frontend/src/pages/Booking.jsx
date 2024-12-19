@@ -166,7 +166,7 @@ const Booking = () => {
       };
 
       const response = await axios.post(
-        `${import.meta.env.VITE_APP_API}/api/snap-token`,
+        `https:\\agrobumi-production.up.railway.app/api/snap-token`,
         data
       );
 
@@ -198,7 +198,9 @@ const Booking = () => {
   };
 
   const updateStatus = (orderId) => {
-    axios.post(`${import.meta.env.VITE_APP_API}/api/update-transaction/${orderId}`);
+    axios.post(
+      `https:\\agrobumi-production.up.railway.app/api/update-transaction/${orderId}`
+    );
   };
 
   const sendEmail = (orderId) => {
@@ -212,7 +214,7 @@ const Booking = () => {
         ticketCode: orderId,
       };
       const response = axios.post(
-        `${import.meta.env.VITE_APP_API}/api/send-notification`,
+        `https:\\agrobumi-production.up.railway.app/api/send-notification`,
         mail
       );
 
@@ -238,7 +240,9 @@ const Booking = () => {
   useEffect(() => {
     const fetchExcludedDates = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_APP_API}/ambil-libur`);
+        const response = await axios.get(
+          `https:\\agrobumi-production.up.railway.app/ambil-libur`
+        );
         const dates = response.data.exclude.flatMap((date) => {
           if (date.end) {
             const range = [];
@@ -254,9 +258,7 @@ const Booking = () => {
           }
         });
         setExcludedDates(dates);
-      } catch (error) {
-        // console.error("Error fetching excluded dates:", error);
-      }
+      } catch (error) {}
     };
 
     setInterval(() => {

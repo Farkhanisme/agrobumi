@@ -55,7 +55,7 @@ function Settings() {
           : null,
       };
       const response = await axios.post(
-        `${import.meta.env.VITE_APP_API}/tambah-libur`,
+        `https:\\agrobumi-production.up.railway.app/tambah-libur`,
         data
       );
       window.location.href = window.location.pathname + "?notificationParams=1";
@@ -68,7 +68,7 @@ function Settings() {
   useEffect(() => {
     const fetchExcludedDates = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_APP_API}/ambil-libur`);
+        const response = await axios.get(`https:\\agrobumi-production.up.railway.app/ambil-libur`);
         setHolidays(response.data.exclude);
       } catch (error) {
         console.error("Error fetching excluded dates:", error);
@@ -80,7 +80,7 @@ function Settings() {
 
   const hapusLibur = async (id) => {
     try {
-      const response = axios.post(`${import.meta.env.VITE_APP_API}/hapus-libur/${id}`);
+      const response = axios.post(`https:\\agrobumi-production.up.railway.app/hapus-libur/${id}`);
       window.location.href = window.location.pathname + "?notificationParams=2";
     } catch (error) {
       window.location.href = window.location.pathname + "?notificationParams=4";
