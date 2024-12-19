@@ -53,7 +53,7 @@ const Sidebar = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            {role === "super admin" && (
+            {role != "admin" && (
               <Link to="/dashboard/user">User Management</Link>
             )}
           </li>
